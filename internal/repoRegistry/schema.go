@@ -38,3 +38,8 @@ type RepositoryManager interface {
   Remove(repositoryName string) error
 }
 
+// RepoManager defines the location of the config file.
+type RepoManager struct {
+
+  ConfigFile string // the path to the YAML config file.
+}
