@@ -44,3 +44,8 @@ type RepoManager struct {
   ConfigFile string // the path to the YAML config file.
 }
 
+// yamlData defines the data to be entered into a yaml file
+type yamlData struct {
+
+  Repositories []Repository
+}
