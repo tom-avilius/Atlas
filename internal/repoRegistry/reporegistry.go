@@ -12,7 +12,7 @@ func checkFileExist (filePath string) bool {
     
     homeDir, err := os.UserHomeDir()
 
-    if (err != nil) {
+    if err != nil {
 
       // TODO: Handle this error
     } else {
@@ -22,10 +22,23 @@ func checkFileExist (filePath string) bool {
   }
   _, err := os.Stat(filePath)
 
-  if (os.IsNotExist(err)) {
+  if os.IsNotExist(err) {
 
     return false
   }
 
   return true;
+}
+
+func createFile (filepath string) bool {
+
+  file, error := os.Create(filepath)
+  defer file.Close() 
+
+  if error != nil {
+
+    return false 
+  }
+
+  return true
 }
