@@ -1,4 +1,4 @@
-package reporegistry
+ package reporegistry
 
 import (
 	"testing"
@@ -58,6 +58,31 @@ func TestWriteYaml (t *testing.T) {
 
   // should return false
   result = writeYaml("////sdads", repository)
+  if result != false {
+
+    t.Errorf("Expected false, got %v", result)
+  }
+}
+
+func TestDeleteYaml (t *testing.T) {
+
+  var repository = Repository {
+    
+    Name: "lo",
+    Url: "eees",
+    AddedAt: time.Now(),
+    LastSync: time.Now(),
+  }
+
+  // should return true
+  result := deleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", repository)
+  if result != true {
+
+    t.Errorf("Expected true, got %v", result)
+  }
+
+  // should return false
+  result = deleteYaml("////sdads", repository)
   if result != false {
 
     t.Errorf("Expected false, got %v", result)
