@@ -1,7 +1,6 @@
 package reporegistry
-
+ 
 import (
-	"fmt"
 	"os"
 	"strings"
 	"gopkg.in/yaml.v3"
@@ -65,8 +64,6 @@ func writeYaml (filepath string, repo Repository) bool {
     return false
   }
 
-  fmt.Println(data)
-
   data.Repositories = append(data.Repositories, repo)
 
   updatedYaml, err := yaml.Marshal(&data)
@@ -76,12 +73,52 @@ func writeYaml (filepath string, repo Repository) bool {
     return false
   }
 
-  fmt.Println(data)
-  fmt.Println(updatedYaml)
-
   err = os.WriteFile(filepath, updatedYaml, 0644)
   if err != nil {
 
+    return false
+  }
+
+  return true
+}
+
+func deleteYaml (filePath string, repo Repository) bool {
+
+  var data yamlData
+
+  content, err := os.ReadFile(filePath)
+  if err != nil {
+
+    // TODO: Handle the error
+    return false
+  }
+
+  err = yaml.Unmarshal(content, &data)
+  if err != nil {
+
+    // TODO: Handle the error
+    return false
+  }
+
+  for i := 0 ; i < len(data.Repositories) ; i++ {
+
+    if data.Repositories[i].Name == repo.Name {
+
+      data.Repositories = append(data.Repositories[:i], data.Repositories[i+1:]...)
+    } 
+  }
+  
+  updatedYaml, err := yaml.Marshal(data)
+  if err != nil {
+
+    // TODO: Handle the error
+    return false
+  }
+
+  err = os.WriteFile(filePath, updatedYaml, 0644)
+  if err != nil {
+    
+    // TODO: Handle the error
     return false
   }
 
