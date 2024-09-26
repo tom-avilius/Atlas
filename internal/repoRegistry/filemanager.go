@@ -82,7 +82,7 @@ func writeYaml (filepath string, repo Repository) bool {
   return true
 }
 
-func deleteYaml (filePath string, repo Repository) bool {
+func deleteYaml (filePath string, repoName string) bool {
 
   var data yamlData
 
@@ -102,7 +102,7 @@ func deleteYaml (filePath string, repo Repository) bool {
 
   for i := 0 ; i < len(data.Repositories) ; i++ {
 
-    if data.Repositories[i].Name == repo.Name {
+    if data.Repositories[i].Name == repoName {
 
       data.Repositories = append(data.Repositories[:i], data.Repositories[i+1:]...)
     } 
