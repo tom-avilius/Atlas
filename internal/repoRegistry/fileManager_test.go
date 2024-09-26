@@ -66,23 +66,15 @@ func TestWriteYaml (t *testing.T) {
 
 func TestDeleteYaml (t *testing.T) {
 
-  var repository = Repository {
-    
-    Name: "lo",
-    Url: "eees",
-    AddedAt: time.Now(),
-    LastSync: time.Now(),
-  }
-
   // should return true
-  result := deleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", repository)
+  result := deleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", "lo")
   if result != true {
 
     t.Errorf("Expected true, got %v", result)
   }
 
   // should return false
-  result = deleteYaml("////sdads", repository)
+  result = deleteYaml("////sdads", "lo")
   if result != false {
 
     t.Errorf("Expected false, got %v", result)
