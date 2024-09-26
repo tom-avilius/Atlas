@@ -53,7 +53,6 @@ func cloneRepo (repoUrl string, clonePath string) bool {
 
   if err != nil {
 
-    fmt.Println(err)
     // TODO: Handle the error.
     return false  
   }
