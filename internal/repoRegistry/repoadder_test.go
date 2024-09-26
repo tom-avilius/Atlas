@@ -33,3 +33,13 @@ func TestValidateUrl (t *testing.T) {
     t.Errorf("Expected false, got %v", result)
   }
 }
+
+func TestCloneRepo (t *testing.T) {
+
+  // should return true 
+  result := cloneRepo("https://github.com/tom-avilius/Atlas", "/home/tom-avilius/clones/atlas")
+  if result != true {
+
+    t.Errorf("Expected true, got %v", result)
+  }
+}
