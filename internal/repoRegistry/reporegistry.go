@@ -25,3 +25,13 @@ func AddRepository (repo Repository, clonePath string) bool {
   return false
 }
 
+func DeleteRepository (onlyDeleteReference bool, repo Repository) bool {
+
+  if onlyDeleteReference {
+
+    return deleteYaml(configFilePath, repo.Name);
+  }
+
+  return true
+}
+
