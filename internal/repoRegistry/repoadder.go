@@ -3,11 +3,9 @@
 package reporegistry
 
 import (
-	"fmt"
 	"net/url"
 	"os"
 	"strings"
-
 	"github.com/go-git/go-git/v5"
 )
 

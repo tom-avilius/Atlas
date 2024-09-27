@@ -7,6 +7,9 @@ package reporegistry
 import "time"
 
 
+// config File path
+var configFilePath string = "/home/tom-avilius/.config/atlas/config.yaml"
+
 // Repository represents a git repository with its associated metadata.
 // It includes the repository's name, URL, and timestamps for when it was added
 // and last synced.
