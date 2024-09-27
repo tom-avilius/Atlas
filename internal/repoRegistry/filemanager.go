@@ -31,6 +31,25 @@ func checkFileExist (filePath string) bool {
   return true;
 }
 
+func createDir () bool {
+
+  dir := "/home/tom-avilius/.config/atlas"
+
+  _, err := os.Stat(dir)
+  if os.IsNotExist(err) {
+
+    err = os.MkdirAll(dir, os.ModePerm)
+  }
+
+  if err != nil {
+
+    // TODO: Handle the error
+    return false
+  }
+
+  return true
+}
+
 // createFile creates a new file at the specified location
 func createFile (filepath string) bool {
 
