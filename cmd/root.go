@@ -14,6 +14,14 @@ var rootCommand = &cobra.Command{
   Short: "A backup tool for you configs and notes.",
   Long: `Atlas uses git to backup the files and folders.
 You must first create a git repository and provide the url for atlas to do its thing.`,
+  Run: func(cmd *cobra.Command, args []string) {
+    
+    fmt.Println("Usage atlas [command]")
+
+    fmt.Println("\nAvailable Commands:")
+    fmt.Println("add \t Add a git repository for atlas to make backups to.")
+    fmt.Println("remove \t Remove a git repository for atlas to stop making backups to.")
+  },
 }
 
 func Execute () {
