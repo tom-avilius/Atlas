@@ -8,21 +8,22 @@ func AddRepository (repo Repository, clonePath string) bool {
   if !checkFileExist(configFilePath) {
 
     // creating the file when it does not exist
-    fmt.Println("Config file does not exist.")
+    fmt.Println("\nConfig file does not exist.")
     createDir()
     fmt.Print("Creating config file.. ")
     createFile(configFilePath)
     fmt.Print("Done.")
   }
 
-  fmt.Print("\nValidating url.. ")
+  fmt.Print("\n\nValidating url.. ")
   // validating the url.
   isValidUrl := validateUrl(repo.Url);
 
   if isValidUrl {
 
     fmt.Print("Done.")
-    fmt.Println("\nProceeding to clone the repository..")
+    fmt.Println("\n\nProceeding to clone the repository..")
+    fmt.Println()
     if cloneRepo(repo.Url, clonePath) {
 
       fmt.Print("\nUpdating the config.. ")
