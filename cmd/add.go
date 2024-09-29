@@ -4,6 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
+
+	"tomavilius.in/atlas/internal/reporegistry"
 
 	"github.com/spf13/cobra"
 )
@@ -21,9 +24,12 @@ var addCommand = &cobra.Command {
   Long: "Add a git repository for atlas to manage and make backups to.",
   Run: func(cmd *cobra.Command, args []string) {
 
+    fmt.Println("\nThis command will walk you over adding a new git repository to atlas.")
+    fmt.Println("The specified local folder or file would be backed up to this repository.")
+
     reader := bufio.NewReader(os.Stdin)
 
-    fmt.Print("Name: ")
+    fmt.Print("\nName: ")
     repoName, _ := reader.ReadString('\n');
 
     fmt.Print("Url: ")
@@ -34,20 +40,30 @@ var addCommand = &cobra.Command {
 
     fmt.Println("\nConfirm Action:")
     fmt.Println("Name:\t" +repoName + "\t(need not be the github repo name)")
-    fmt.Println("Url:\t" +repoUrl + "\t(needs to be the github clone link)")
+    fmt.Println("Url:\t" +repoUrl + "\t(needs to be the github repo link)")
     
     fmt.Println("\nConfirm Action by pressing y or n to abort.")
     choice, _ := reader.ReadString('\n');
 
     if len(choice) > 2 {
 
-      fmt.Println("Too long an input.")
+      fmt.Println("Too long an input. \nAborting..")
       os.Exit(1)
     }
 
     if choice[0] == 'y' || choice[0] == 'Y' {
+      
+      repo := reporegistry.Repository {
+        
+        Name: repoName,
+        Url: repoUrl,
+        AddedAt: time.Now(),
+        LastSync: time.Time{},
+      } 
 
-      fmt.Println("\nProceeding to clone the repository..")
+      homeDir, _ := os.UserHomeDir()
+      fmt.Println(homeDir)
+      reporegistry.AddRepository(repo, homeDir+"/.config/atlas/"+repoName)
     } else if choice[0] == 'n' || choice[0] == 'N' {
 
       fmt.Println("\nAborting.. \nNo changes have been made.")
