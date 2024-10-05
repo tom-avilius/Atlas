@@ -1,8 +1,11 @@
 package reporegistry
- 
+
 import (
+	"fmt"
+	"hash/adler32"
 	"os"
 	"strings"
+
 	"gopkg.in/yaml.v3"
 )
 
@@ -15,16 +18,26 @@ func checkFileExist (filePath string) bool {
 
     if err != nil {
 
-      // TODO: Handle this error
+      fmt.Println("Error while getting the home directory.")
+      fmt.Println(err)
+      return false
     } else {
 
       filePath = strings.Join([]string{homeDir}, filePath[1:])
     }
   }
+
   _, err := os.Stat(filePath)
 
   if os.IsNotExist(err) {
 
+    return false
+  }
+
+  if err != nil {
+
+    fmt.Println("Error occured while pinging a file.")
+    fmt.Println(err)
     return false
   }
 
@@ -43,7 +56,8 @@ func createDir () bool {
 
   if err != nil {
 
-    // TODO: Handle the error
+    fmt.Println("Error occured while pinging directory.")
+    fmt.Println(err)
     return false
   }
 
@@ -53,12 +67,13 @@ func createDir () bool {
 // createFile creates a new file at the specified location
 func createFile (filepath string) bool {
 
-  file, error := os.Create(filepath)
+  file, err := os.Create(filepath)
   defer file.Close() 
 
-  // TODO: Handle all errors internally.
-  if error != nil {
+  if err != nil {
 
+    fmt.Println("Error occured while creating file.")
+    fmt.Println(err)
     return false 
   }
 
@@ -72,14 +87,16 @@ func writeYaml (filepath string, repo Repository) bool {
   content, err := os.ReadFile(filepath)
   if err != nil {
 
-    // TODO: Handle errors internally.
+    fmt.Println("Error occured while reading a file.")
+    fmt.Println(err)
     return false
   }
 
   err = yaml.Unmarshal(content, &data)
   if err != nil {
 
-    // TODO: Handle error
+    fmt.Println("Error occured while Unmarshalling a file.")
+    fmt.Println(err)
     return false
   }
 
@@ -88,13 +105,16 @@ func writeYaml (filepath string, repo Repository) bool {
   updatedYaml, err := yaml.Marshal(&data)
   if err != nil {
 
-    // TODO: Handle error
+    fmt.Println("Error occured while marhsalling a file.")
+    fmt.Println(err)
     return false
   }
 
   err = os.WriteFile(filepath, updatedYaml, 0644)
   if err != nil {
 
+    fmt.Println("Error occured while writing to a file.")
+    fmt.Println(err)
     return false
   }
 
@@ -108,14 +128,16 @@ func deleteYaml (filePath string, repoName string) bool {
   content, err := os.ReadFile(filePath)
   if err != nil {
 
-    // TODO: Handle the error
+    fmt.Println("Error occured while reading a file.")
+    fmt.Println(err)
     return false
   }
 
   err = yaml.Unmarshal(content, &data)
   if err != nil {
 
-    // TODO: Handle the error
+    fmt.Println("Error occured while Unmarshalling a file.")
+    fmt.Println(err)
     return false
   }
 
@@ -130,16 +152,19 @@ func deleteYaml (filePath string, repoName string) bool {
   updatedYaml, err := yaml.Marshal(data)
   if err != nil {
 
-    // TODO: Handle the error
+    fmt.Println("Error occured while marshalling a file.")
+    fmt.Println(err)
     return false
   }
 
   err = os.WriteFile(filePath, updatedYaml, 0644)
   if err != nil {
     
-    // TODO: Handle the error
+    fmt.Println("Error occured while writing to a file.")
+    fmt.Println(err)
     return false
   }
 
   return true
 }
+
