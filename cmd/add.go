@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"tomavilius.in/atlas/internal/reporegistry"
@@ -31,6 +32,7 @@ var addCommand = &cobra.Command {
 
     fmt.Print("\nName: ")
     repoName, _ := reader.ReadString('\n');
+    repoName = strings.ToLower(repoName)
 
     fmt.Print("Url: ")
     repoUrl, _ := reader.ReadString('\n')
@@ -55,7 +57,7 @@ var addCommand = &cobra.Command {
       
       repo := reporegistry.Repository {
         
-        Name: repoName,
+        Name: strings.TrimSpace(repoName),
         Url: repoUrl,
         AddedAt: time.Now(),
         LastSync: time.Time{},

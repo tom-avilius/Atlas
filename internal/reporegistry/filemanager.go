@@ -140,16 +140,25 @@ func deleteYaml (filePath string, repoName string) bool {
     return false
   }
 
+  var flag int = 0;
+
   for i := 0; i < len(data.Repositories); i++ {
 
-    if data.Repositories[i].Name == strings.TrimSpace(repoName) {
+    if data.Repositories[i].Name == repoName {
 
       // Remove the element at index i
       data.Repositories = append(data.Repositories[:i], data.Repositories[i+1:]...)
-      
       // Since the slice shrinks, you need to decrement i to stay on the same index
       i--
+      // increment flag
+      flag++
     } 
+  }
+
+  if flag == 0 {
+
+    fmt.Println("Warning: No match found for " + repoName)
+    return false;
   }
 
   updatedYaml, err := yaml.Marshal(data)
@@ -168,6 +177,7 @@ func deleteYaml (filePath string, repoName string) bool {
     return false
   }
 
+  fmt.Println("Success: Removed " +repoName +" from config.")
   return true
 }
 

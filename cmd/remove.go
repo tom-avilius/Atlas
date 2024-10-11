@@ -4,7 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-  "tomavilius.in/atlas/internal/reporegistry"
+	"strings"
+
+	"tomavilius.in/atlas/internal/reporegistry"
 
 	"github.com/spf13/cobra"
 )
@@ -29,8 +31,10 @@ var removeCommand = &cobra.Command {
 
     repoName, _ := reader.ReadString('\n')
 
+    repoName = strings.ToLower(repoName)
+
     // TODO: match the reponame with all the names in the config file, if the repo is not there inform the user.
 
-    reporegistry.DeleteRepository(true, repoName)
+    reporegistry.DeleteRepository(true, strings.TrimSpace(repoName))
   },
 }
