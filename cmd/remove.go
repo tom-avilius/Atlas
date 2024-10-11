@@ -23,7 +23,7 @@ var removeCommand = &cobra.Command {
   Long: "Remove a git repository or stop managing it. Only works locally. Would not delete the remote repository.",
   Run: func(cmd *cobra.Command, args []string) {
 
-    fmt.Println("Repository Name: ");
+    fmt.Print("Repository Name: ");
     
     reader := bufio.NewReader(os.Stdin)
 

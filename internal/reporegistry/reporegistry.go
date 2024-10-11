@@ -40,14 +40,13 @@ func AddRepository (repo Repository, clonePath string) bool {
   return false
 }
 
-func DeleteRepository (onlyDeleteReference bool, repo Repository) bool {
+func DeleteRepository (onlyDeleteReference bool, repoName string) bool {
 
   if onlyDeleteReference {
 
-    return deleteYaml(configFilePath, repo.Name);
+    return deleteYaml(configFilePath, repoName);
   }
 
-  fmt.Println("Error: Could not delete repository.")
   return false
 }
 

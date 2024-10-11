@@ -2,7 +2,6 @@ package reporegistry
 
 import (
 	"fmt"
-	"hash/adler32"
 	"os"
 	"strings"
 
@@ -141,14 +140,18 @@ func deleteYaml (filePath string, repoName string) bool {
     return false
   }
 
-  for i := 0 ; i < len(data.Repositories) ; i++ {
+  for i := 0; i < len(data.Repositories); i++ {
 
-    if data.Repositories[i].Name == repoName {
+    if data.Repositories[i].Name == strings.TrimSpace(repoName) {
 
+      // Remove the element at index i
       data.Repositories = append(data.Repositories[:i], data.Repositories[i+1:]...)
+      
+      // Since the slice shrinks, you need to decrement i to stay on the same index
+      i--
     } 
   }
-  
+
   updatedYaml, err := yaml.Marshal(data)
   if err != nil {
 
