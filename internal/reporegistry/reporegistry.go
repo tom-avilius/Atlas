@@ -1,3 +1,4 @@
+
 package reporegistry
 
 import "fmt"
@@ -30,10 +31,12 @@ func AddRepository (repo Repository, clonePath string) bool {
       if writeYaml(configFilePath, repo) {
 
         fmt.Print("Done.")
+        return true
       }
     }
   }
 
+  fmt.Println("Error: Could not add repository.")
   return false
 }
 
@@ -44,6 +47,7 @@ func DeleteRepository (onlyDeleteReference bool, repo Repository) bool {
     return deleteYaml(configFilePath, repo.Name);
   }
 
-  return true
+  fmt.Println("Error: Could not delete repository.")
+  return false
 }
 
