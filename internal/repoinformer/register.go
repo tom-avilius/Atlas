@@ -53,7 +53,7 @@ func listOnlyRepositories () bool {
   fmt.Println()
   for i := 0; i < len(data.Repositories); i++ {
 
-    fmt.Println("Name: \t\t" +data.Repositories[i].Name)
+    fmt.Println("Name: \t" +data.Repositories[i].Name)
   }
 
   return success;
