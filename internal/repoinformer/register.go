@@ -1,17 +1,22 @@
-
 package repoinformer
 
-
 import (
+	"fmt"
 
-  "tomavilius.in/atlas/internal/reporegistry"
+	"tomavilius.in/atlas/internal/reporegistry"
 )
 
 
 
 func listRepositories () bool {
 
- 
-  return true
+  data, success := readYaml(reporegistry.ConfigFilePath)
+
+  if success {
+
+    fmt.Println(data);
+  }
+
+  return success;
 }
 

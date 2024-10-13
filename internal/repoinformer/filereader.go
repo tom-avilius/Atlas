@@ -10,7 +10,8 @@ import (
 
 
 
-
+// readYaml reades the yaml file and unmarshals it to YamlData structure
+// return false if error occurs otherwise returns YamlData
 func readYaml (filepath string) (*reporegistry.YamlData, bool) {
 
   // WARN: Expecting that the filepath is absolute.

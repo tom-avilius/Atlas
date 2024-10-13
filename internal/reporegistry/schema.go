@@ -8,7 +8,7 @@ import "time"
 
 
 // config File path
-var configFilePath string = "/home/tom-avilius/.config/atlas/config.yaml"
+var ConfigFilePath string = "/home/tom-avilius/.config/atlas/config.yaml"
 
 // Repository represents a git repository with its associated metadata.
 // It includes the repository's name, URL, and timestamps for when it was added
@@ -52,3 +52,4 @@ type YamlData struct {
 
   Repositories []Repository
 }
+
