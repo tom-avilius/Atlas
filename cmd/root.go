@@ -21,6 +21,7 @@ You must first create a git repository and provide the url for atlas to do its t
     fmt.Println("\nAvailable Commands:")
     fmt.Println("add \t Add a git repository for atlas to make backups to.")
     fmt.Println("remove \t Remove a git repository for atlas to stop making backups to.")
+    fmt.Println("info \t Detailed list view of atlas config.")
   },
 }
 
