@@ -2,6 +2,9 @@
 package reporegistry
 
 
+
+// removeRepository removes the repository and atlas would no more make backups to it.
+// returns false if an error occurs.
 func removeRepository (repoName string,  onlyRemoveReference bool) bool {
 
   if (onlyRemoveReference) {
