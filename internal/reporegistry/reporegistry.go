@@ -1,8 +1,13 @@
 
 package reporegistry
 
+
 import "fmt"
 
+
+
+// AddRepository adds a repository for atlas to manage.
+// returns false if an error occurs.
 func AddRepository (repo Repository, clonePath string) bool {
 
   // checking if the config file exists
@@ -16,10 +21,11 @@ func AddRepository (repo Repository, clonePath string) bool {
     fmt.Print("Done.")
   }
 
-  fmt.Print("\n\nValidating url.. ")
   // validating the url.
+  fmt.Print("\n\nValidating url.. ")
   isValidUrl := validateUrl(repo.Url);
 
+  // cloning the repository
   if isValidUrl {
 
     fmt.Print("Done.")
@@ -36,12 +42,17 @@ func AddRepository (repo Repository, clonePath string) bool {
     }
   }
 
+  // exit the function if it fails.
   fmt.Println("Error: Could not add repository.")
   return false
 }
 
+
+// DeleteRepository deletes the repository meaning atlas would no more manage it.
+// returns false if an error occurs.
 func DeleteRepository (onlyDeleteReference bool, repoName string) bool {
 
+  // only delete the reference not the actual local folder.
   if onlyDeleteReference {
 
     return deleteYaml(configFilePath, repoName);
