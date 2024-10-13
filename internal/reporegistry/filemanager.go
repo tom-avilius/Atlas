@@ -124,7 +124,7 @@ func createFile (filepath string) bool {
 func writeYaml (filepath string, repo Repository) bool {
 
   // to store yaml data.
-  var data yamlData
+  var data YamlData
 
   // read the yaml file
   content, err := os.ReadFile(filepath)
@@ -179,7 +179,7 @@ func writeYaml (filepath string, repo Repository) bool {
 func deleteYaml (filePath string, repoName string) bool {
 
   // to store the yaml data
-  var data yamlData
+  var data YamlData
 
   // reading the file
   content, err := os.ReadFile(filePath)

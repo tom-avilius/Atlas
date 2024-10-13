@@ -11,13 +11,13 @@ import "fmt"
 func AddRepository (repo Repository, clonePath string) bool {
 
   // checking if the config file exists
-  if !checkFileExist(configFilePath) {
+  if !checkFileExist(ConfigFilePath) {
 
     // creating the file when it does not exist
     fmt.Println("\nConfig file does not exist.")
     createDir()
     fmt.Print("Creating config file.. ")
-    createFile(configFilePath)
+    createFile(ConfigFilePath)
     fmt.Print("Done.")
   }
 
@@ -34,7 +34,7 @@ func AddRepository (repo Repository, clonePath string) bool {
     if cloneRepo(repo.Url, clonePath) {
 
       fmt.Print("\nUpdating the config.. ")
-      if writeYaml(configFilePath, repo) {
+      if writeYaml(ConfigFilePath, repo) {
 
         fmt.Print("Done.")
         return true
@@ -55,7 +55,7 @@ func DeleteRepository (onlyDeleteReference bool, repoName string) bool {
   // only delete the reference not the actual local folder.
   if onlyDeleteReference {
 
-    return deleteYaml(configFilePath, repoName);
+    return deleteYaml(ConfigFilePath, repoName);
   }
 
   return false
