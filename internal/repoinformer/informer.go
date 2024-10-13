@@ -9,3 +9,7 @@ func DetailedRepositoryView () bool {
 }
 
 
+func ListRepositories () bool {
+
+  return listOnlyRepositories()
+}

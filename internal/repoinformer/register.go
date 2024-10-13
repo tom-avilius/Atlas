@@ -14,6 +14,7 @@ import (
 // listRepositories lists the complete atlas config after formatting it.
 func listRepositories () bool {
 
+  // read the config file
   data, success := readYaml(reporegistry.ConfigFilePath)
 
   // if read yaml was unsuccessful then simply return false
@@ -22,6 +23,7 @@ func listRepositories () bool {
     return false
   }
 
+  // format the config to display
   for i := 0; i < len(data.Repositories); i++ {
 
     fmt.Println()
@@ -34,3 +36,25 @@ func listRepositories () bool {
   return success;
 }
 
+
+// to only list Repositories from atlas config.
+func listOnlyRepositories () bool {
+  
+  // read the config file
+  data, success := readYaml(reporegistry.ConfigFilePath)
+
+  // if read yaml was unsuccessful then simply return false
+  if !success {
+
+    return false
+  }
+
+  // display Repositories
+  fmt.Println()
+  for i := 0; i < len(data.Repositories); i++ {
+
+    fmt.Println("Name: \t\t" +data.Repositories[i].Name)
+  }
+
+  return success;
+}
