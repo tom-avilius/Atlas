@@ -1,4 +1,6 @@
+
 package repoinformer
+
 
 import (
 	"fmt"
@@ -53,3 +55,4 @@ func readYaml (filepath string) (*reporegistry.YamlData, bool) {
   // safely exit the function
   return &data, true
 }
+

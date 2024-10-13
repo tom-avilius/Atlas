@@ -1,4 +1,6 @@
+
 package repoinformer
+
 
 import (
 	"fmt"
@@ -9,6 +11,7 @@ import (
 
 
 
+// listRepositories lists the complete atlas config after formatting it.
 func listRepositories () bool {
 
   data, success := readYaml(reporegistry.ConfigFilePath)
