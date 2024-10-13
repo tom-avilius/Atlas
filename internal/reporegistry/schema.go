@@ -48,7 +48,7 @@ type RepoManager struct {
 }
 
 // yamlData defines the data to be entered into a yaml file
-type yamlData struct {
+type YamlData struct {
 
   Repositories []Repository
 }
