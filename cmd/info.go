@@ -6,6 +6,11 @@ import (
 )
 
 
+func init () {
+
+  rootCommand.AddCommand(infoCommand)
+}
+
 var infoCommand =  &cobra.Command {
 
   Use: "info",
