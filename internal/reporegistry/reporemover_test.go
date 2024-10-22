@@ -12,7 +12,5 @@ func TestRepositoryRemover (t *testing.T) {
 
     t.Errorf("Expected true, got %v", result)
   }
-
-  // TODO: Test other cases after implementing them
 }
 

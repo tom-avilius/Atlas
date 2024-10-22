@@ -3,6 +3,7 @@ package reporegistry
 import (
 	"fmt"
 	"os"
+	"path"
 	"strings"
 )
 
@@ -24,7 +25,7 @@ func HandleHomeDirectory (filePath string) (string, bool) {
     }
 
     // otherwise concatenate home dir with the file path.
-    filePath = strings.Join([]string{homeDir}, filePath[1:])
+    filePath = path.Join(homeDir, filePath[1:])
   }
 
   return filePath, true

@@ -24,7 +24,7 @@ func checkFileExist (filePath string) bool {
     // unsuccessful 
     return false
   }
-  
+
   // to check whether the file exists or not
   _, err := os.Stat(filePath)
 
@@ -47,6 +47,15 @@ func checkFileExist (filePath string) bool {
 // function to create a directory at the specified path.
 // returns false if an error occurs
 func createDir (dir string) bool {
+
+  // resolving ~ directory
+  if path, success := HandleHomeDirectory(dir); success {
+
+    dir = path
+  } else {
+
+    return false
+  }
 
   // create directory
   if direrr := os.MkdirAll(dir, os.ModePerm); direrr != nil {
@@ -96,6 +105,16 @@ func createFile (filepath string) bool {
 // writeYaml appends to a yaml file with repo information
 // returns false if an error occurs.
 func writeYaml (filepath string, repo Repository) bool {
+
+  // handling ~ paths
+  if path, success := HandleHomeDirectory(filepath); success {
+
+    filepath = path
+  } else {
+    
+    // unsuccessful 
+    return false
+  }
 
   // to store yaml data.
   var data YamlData
@@ -151,6 +170,16 @@ func writeYaml (filepath string, repo Repository) bool {
 // deleteYaml deletes the specified yaml data from a yaml file.
 // returns false if an error occurs.
 func deleteYaml (filePath string, repoName string) bool {
+
+    // handling ~ paths
+  if path, success := HandleHomeDirectory(filePath); success {
+
+    filePath = path
+  } else {
+    
+    // unsuccessful 
+    return false
+  }
 
   // to store the yaml data
   var data YamlData
