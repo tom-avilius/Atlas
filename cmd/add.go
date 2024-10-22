@@ -64,7 +64,7 @@ var addCommand = &cobra.Command {
       } 
 
       homeDir, _ := os.UserHomeDir()
-      reporegistry.AddRepository(repo, homeDir+"/.config/atlas/"+repoName)
+      reporegistry.AddRepository(repo, homeDir+"/config/atlas/"+repoName)
     } else if choice[0] == 'n' || choice[0] == 'N' {
 
       fmt.Println("\nAborting.. \nNo changes have been made.")

@@ -43,10 +43,7 @@ func checkFileExist (filePath string) bool {
   if os.IsNotExist(err) {
 
     return false
-  }
-
-  // Log if an error occured when checking for file existence
-  if err != nil {
+  } else if err != nil { // Log if an error occured when checking for file existence
 
     fmt.Println("Error occured while pinging a file.")
     fmt.Println(err)
@@ -65,29 +62,12 @@ func createDir () bool {
   // FIXME: Should be provided as a path
   dir := "/home/tom-avilius/.config/atlas"
 
-  // check whether the directory already exists
-  _, err := os.Stat(dir)
-
-  // Log if an error occurs while pinging the file.
-  if err != nil {
-
-    fmt.Println("Error occured while pinging directory.")
-    fmt.Println("Error Log:")
-    fmt.Println(err)    
-  }
-
-  // to check if the dir does not exist
-  if os.IsNotExist(err) {
-
-    // if not then make the directory
-    err = os.MkdirAll(dir, os.ModePerm)
-  }
-
-  // Log if an error occurs while creating the directory
-  if err != nil {
+  // create directory
+  if direrr := os.MkdirAll(dir, os.ModePerm); direrr != nil {
 
     fmt.Println("Error occured while creating directory.")
-    fmt.Println(err)
+    fmt.Println("Error Log:")
+    fmt.Println(direrr)
     return false
   }
 
