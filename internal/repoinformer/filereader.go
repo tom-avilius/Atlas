@@ -16,7 +16,15 @@ import (
 // return false if error occurs otherwise returns YamlData
 func readYaml (filepath string) (*reporegistry.YamlData, bool) {
 
-  // WARN: Expecting that the filepath is absolute.
+  // handle ~ directory
+  if path, success := reporegistry.HandleHomeDirectory(filepath); success {
+    
+    filepath = path
+  } else {
+
+    // unsuccessful
+    return nil, false
+  }
 
   // if the file does not exist then exist the function
   if _, err := os.Stat(filepath); os.IsNotExist(err) {
