@@ -33,8 +33,6 @@ var removeCommand = &cobra.Command {
 
     repoName = strings.ToLower(repoName)
 
-    // TODO: match the reponame with all the names in the config file, if the repo is not there inform the user.
-
     reporegistry.DeleteRepository(true, strings.TrimSpace(repoName))
   },
 }

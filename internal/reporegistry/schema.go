@@ -30,11 +30,11 @@ type Credentials struct {
   Password string // Password for accessing the repository
 }
 
+// INFO: I Might not even have implemented this.
+
 // RepositoryManager defines methods for managing repositories.
 // It includes methods to add and remove repositories.
 type RepositoryManager interface {
-
-  // TODO: Instead of using the standard error interface, use an advanced and modified version from a local module instead.
 
   // Add adds a repository with the specified credentials.
   Add(repo Repository, cred Credentials) error
