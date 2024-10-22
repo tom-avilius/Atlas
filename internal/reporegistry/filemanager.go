@@ -88,10 +88,17 @@ func createDir (dir string) bool {
 
 // createFile creates a new file at the specified location
 // returns false if an error occurs.
+// WARNING: If the file already exists then it will be formatted ( contents cleared ).
 func createFile (filepath string) bool {
 
-  // FIXME: In case of non-absolute paths handle home dir.
-  // WARN: What if the file already exists?
+  // handling ~ paths
+  if path, success := handleHomeDirectory(filepath); success {
+
+    filepath = path
+  } else {
+
+    return false
+  }
 
   // creating the file at the specified location
   file, err := os.Create(filepath)
