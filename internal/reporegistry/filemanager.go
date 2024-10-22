@@ -12,13 +12,10 @@ import (
 
 
 
-// checkFileExist checks whether a file exists or not.
-// returns false when it can not find the file or any error occurs.
-func checkFileExist (filePath string) bool {
+// function the fills in the home directory when ~ is provided at the start
+func handleHomeDirectory (filePath string) (string, bool) {
 
-  // resolving for home dir
-  // WARN: Maybe it is better to move this to a separate function.
-  if strings.HasPrefix(filePath, "~") {
+ if strings.HasPrefix(filePath, "~") {
     
     // getting the home directory
     homeDir, err := os.UserHomeDir()
@@ -27,15 +24,32 @@ func checkFileExist (filePath string) bool {
     if err != nil {
 
       fmt.Println("Error while getting the home directory.")
+      fmt.Println("Error Log:")
       fmt.Println(err)
-      return false
-    } else {
-
-      // otherwise concatenate home dir with the file path.
-      filePath = strings.Join([]string{homeDir}, filePath[1:])
+      return "", false
     }
+
+    // otherwise concatenate home dir with the file path.
+    filePath = strings.Join([]string{homeDir}, filePath[1:])
   }
 
+  return filePath, true
+}
+
+// checkFileExist checks whether a file exists or not.
+// returns false when it can not find the file or any error occurs.
+func checkFileExist (filePath string) bool {
+
+  // resolving for home dir
+  if path, success := handleHomeDirectory(filePath); success {
+
+    filePath = path
+  } else {
+
+    // unsuccessful 
+    return false
+  }
+  
   // to check whether the file exists or not
   _, err := os.Stat(filePath)
 
