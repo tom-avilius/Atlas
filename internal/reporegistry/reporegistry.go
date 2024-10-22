@@ -15,7 +15,7 @@ func AddRepository (repo Repository, clonePath string) bool {
 
     // creating the file when it does not exist
     fmt.Println("\nConfig file does not exist.")
-    createDir()
+    createDir(ConfigDir)
     fmt.Print("Creating config file.. ")
     createFile(ConfigFilePath)
     fmt.Print("Done.")

@@ -57,10 +57,7 @@ func checkFileExist (filePath string) bool {
 
 // function to create a directory at the specified path.
 // returns false if an error occurs
-func createDir () bool {
-
-  // FIXME: Should be provided as a path
-  dir := "/home/tom-avilius/.config/atlas"
+func createDir (dir string) bool {
 
   // create directory
   if direrr := os.MkdirAll(dir, os.ModePerm); direrr != nil {

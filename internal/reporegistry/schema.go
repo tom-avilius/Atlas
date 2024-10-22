@@ -9,6 +9,7 @@ import "time"
 
 // FIXME: Provide a dynamic path for home-dir
 // config File path
+var ConfigDir = "/home/tom_avilius/.config/atlas"
 var ConfigFilePath string = "/home/tom_avilius/.config/atlas/config.yaml"
 
 // Repository represents a git repository with its associated metadata.
