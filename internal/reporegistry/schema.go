@@ -7,10 +7,9 @@ package reporegistry
 import "time"
 
 
-// FIXME: Provide a dynamic path for home-dir
-// config File path
-var ConfigDir = "/home/tom_avilius/.config/atlas"
-var ConfigFilePath string = "/home/tom_avilius/.config/atlas/config.yaml"
+// INFO: Things could break because of this, just use absolute path if they do.
+var ConfigDir string = "~/.config/atlas"
+var ConfigFilePath string = "~/.config/atlas/config.yaml"
 
 // Repository represents a git repository with its associated metadata.
 // It includes the repository's name, URL, and timestamps for when it was added
