@@ -66,7 +66,7 @@ func AddRepository (repo Repository, clonePath string) bool {
     fmt.Print("Done.")
     fmt.Println("\n\nProceeding to clone the repository..")
     fmt.Println()
-    if cloneRepo(repo.Url, clonePath) {
+    if cloneRepo(repo.Url, path.Join(clonePath, repo.Name)) {
 
       fmt.Print("\nUpdating the config.. ")
       if writeYaml(ConfigFilePath, repo) {
