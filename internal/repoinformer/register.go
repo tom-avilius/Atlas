@@ -29,6 +29,7 @@ func listRepositories () bool {
     fmt.Println()
     fmt.Println("Name: \t\t" +data.Repositories[i].Name)
     fmt.Println("Url: \t\t" +data.Repositories[i].Url)
+    fmt.Println("Path: \t\t" +data.Repositories[i].Path)
     fmt.Println("Last Sync: \t" +data.Repositories[i].LastSync.Format(time.RFC850))
     fmt.Println("Added At: \t" +data.Repositories[i].AddedAt.Format(time.RFC850))
   }
