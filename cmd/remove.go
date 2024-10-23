@@ -34,6 +34,9 @@ var removeCommand = &cobra.Command {
 
       fmt.Println("Clearing the entire config.")
       fmt.Println("Note: This does not affect any cloned folders, or anything other than the config in general.")
+      
+      reporegistry.ClearConfig()
+
       os.Exit(0)
     }
 

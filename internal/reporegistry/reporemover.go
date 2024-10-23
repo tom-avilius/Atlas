@@ -20,3 +20,4 @@ func removeRepository (repoName string,  onlyRemoveReference bool) bool {
 
   return true
 }
+

@@ -96,3 +96,18 @@ func DeleteRepository (onlyDeleteReference bool, repoName string) bool {
   return false
 }
 
+
+// Replaced the entire config with a new empty one.
+func ClearConfig () bool {
+
+  if createFile(ConfigFilePath) {
+
+    fmt.Println("\nCleared the config file.")
+    return true
+  } else {
+
+    fmt.Println("\nCould not clear the config.")
+    return false
+  }
+}
+
