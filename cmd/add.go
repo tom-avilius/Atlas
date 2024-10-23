@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path"
 	"strings"
 	"time"
 
@@ -76,6 +77,7 @@ var addCommand = &cobra.Command {
         
         Name: strings.TrimSpace(repoName),
         Url: repoUrl,
+        Path: path.Join(clonePath, repoName),
         AddedAt: time.Now(),
         LastSync: time.Time{},
       } 

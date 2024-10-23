@@ -1,4 +1,4 @@
-        
+
 // Package repoRegistry provides data structures and interfaces for managing repositories.
 // This module allows for adding, removing, and syncing repository information.
 package reporegistry
