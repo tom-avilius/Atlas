@@ -37,12 +37,29 @@ var addCommand = &cobra.Command {
     fmt.Print("Url: ")
     repoUrl, _ := reader.ReadString('\n')
 
+    var clonePath string
+    homeDir, err := os.UserHomeDir()
+    if err == nil {
+
+      fmt.Print("Clone Path: " +homeDir);
+      clonePath, _ = reader.ReadString('\n')
+    } else {
+
+      fmt.Println("Error occured while getting home directory.")
+      fmt.Println("Error Log:")
+      fmt.Println(err);
+      os.Exit(1)
+    }
+
     repoName = repoName[:len(repoName)-1]
     repoUrl = repoUrl[:len(repoUrl)-1]
+    clonePath = clonePath[:len(clonePath)-1]
+    clonePath = homeDir+clonePath
 
     fmt.Println("\nConfirm Action:")
     fmt.Println("Name:\t" +repoName + "\t(need not be the github repo name)")
     fmt.Println("Url:\t" +repoUrl + "\t(needs to be the github repo link)")
+    fmt.Println("Path:\t" +clonePath +"\t(the local clone path)")
     
     fmt.Println("\nConfirm Action by pressing y or n to abort.")
     choice, _ := reader.ReadString('\n');
