@@ -51,6 +51,15 @@ func AddRepository (repo Repository, clonePath string) bool {
   fmt.Print("\n\nValidating url.. ")
   isValidUrl := validateUrl(repo.Url);
 
+  // checking if clone path exists
+  if !checkFileExist(clonePath) {
+
+    // creating clone path if it does not exist
+    fmt.Println("\nClone Path does not exist.")
+    fmt.Println("Creating clone path..")
+    createDir(clonePath)
+  }
+
   // cloning the repository
   if isValidUrl {
 
