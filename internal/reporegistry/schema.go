@@ -8,6 +8,7 @@ import "time"
 
 
 // INFO: Things could break because of this, just use absolute path if they do.
+// Well they have not.
 var ConfigDir string = "~/.config/atlas"
 var ConfigFilePath string = "~/.config/atlas/config.yaml"
 
@@ -18,9 +19,12 @@ type Repository struct {
   
   Name     string    // Name of the repository
   Url      string    // URL of the repository
+  Path     string
   AddedAt  time.Time // Timestamp when the repository was added
   LastSync time.Time // Timestamp of the last sync operation
 }
+
+// INFO: Not implemented so far
 
 // Credentials holds user authentication details for accessing a repository.
 // It includes the username and password required for access.
