@@ -59,13 +59,8 @@ type YamlData struct {
   Repositories []Repository
 }
 
-type Path struct {
-
-  DirPath string
-}
-
 type PathData struct {
 
-  Paths []Path
+  Paths []string
 }
 

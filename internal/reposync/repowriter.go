@@ -36,7 +36,7 @@ func createPathFile() bool {
 
 // function to write path data to the path file.
 // returns false if an error occurs.
-func writePathData (filepath string, pathData []string) bool {
+func writePathData (filepath string, pathData reporegistry.PathData) bool {
 
   // handling ~ paths
   if path, success := reporegistry.HandleHomeDirectory(filepath); success {
@@ -49,7 +49,7 @@ func writePathData (filepath string, pathData []string) bool {
   }
 
   // to store yaml data.
-  var data reporegistry.YamlData
+  var data reporegistry.PathData
 
   // read the yaml file
   content, err := os.ReadFile(filepath)
@@ -72,7 +72,7 @@ func writePathData (filepath string, pathData []string) bool {
   }
 
   // append the new data
-   = append(data.Reposito, pathData)
+  data.Paths = append(data.Paths, pathData.Paths...)
 
   // Marshal the updated yaml data
   updatedYaml, err := yaml.Marshal(&data)
