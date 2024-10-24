@@ -11,6 +11,7 @@ import "time"
 // Well they have not.
 var ConfigDir string = "~/.config/atlas"
 var ConfigFilePath string = "~/.config/atlas/config.yaml"
+var PathFilePath string = "~/.config/atlas/path.yaml"
 
 // Repository represents a git repository with its associated metadata.
 // It includes the repository's name, URL, and timestamps for when it was added

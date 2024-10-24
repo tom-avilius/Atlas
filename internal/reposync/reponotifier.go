@@ -78,3 +78,9 @@ func dirList (path string) ([]string, bool) {
   return directories, true
 }
 
+
+// functoin to create a path file which stores the various paths that must be added to fsnotify
+func createPathFile() {
+
+  
+} 
