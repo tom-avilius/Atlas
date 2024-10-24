@@ -15,7 +15,7 @@ import (
 func listRepositories () bool {
 
   // read the config file
-  data, success := readYaml(reporegistry.ConfigFilePath)
+  data, success := ReadYaml(reporegistry.ConfigFilePath)
 
   // if read yaml was unsuccessful then simply return false
   if !success {
@@ -42,7 +42,7 @@ func listRepositories () bool {
 func listOnlyRepositories () bool {
   
   // read the config file
-  data, success := readYaml(reporegistry.ConfigFilePath)
+  data, success := ReadYaml(reporegistry.ConfigFilePath)
 
   // if read yaml was unsuccessful then simply return false
   if !success {
