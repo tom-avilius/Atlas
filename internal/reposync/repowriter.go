@@ -13,7 +13,9 @@ func createPathFile() bool {
 
   // if the path file does not exist, create it
   if !reporegistry.CheckFileExist(reporegistry.PathFilePath) {
-    
+
+    fmt.Println("\nPath file does not exist.")
+    fmt.Println("Creating path file..")
     // if atlas config directory could not be created
     if success := reporegistry.CreateDir(reporegistry.ConfigDir); !success {
 
@@ -27,6 +29,8 @@ func createPathFile() bool {
       fmt.Println("Could not create path file for atlas.")
       return false
     }
+
+    fmt.Println("Created path file.")
   }
 
   // successful
@@ -56,7 +60,7 @@ func writePathData (filepath string, pathData reporegistry.PathData) bool {
   // Log if an error occurs
   if err != nil {
 
-    fmt.Println("Error occured while reading a file.")
+    fmt.Println("Error occured while reading path file.")
     fmt.Println(err)
     return false
   }
@@ -66,7 +70,7 @@ func writePathData (filepath string, pathData reporegistry.PathData) bool {
   // Log if an error occurs
   if err != nil {
 
-    fmt.Println("Error occured while Unmarshalling a file.")
+    fmt.Println("Error occured while Unmarshalling path file.")
     fmt.Println(err)
     return false
   }
@@ -79,7 +83,7 @@ func writePathData (filepath string, pathData reporegistry.PathData) bool {
   // Log if an error occurs.
   if err != nil {
 
-    fmt.Println("Error occured while marhsalling a file.")
+    fmt.Println("Error occured while marhsalling path file.")
     fmt.Println(err)
     return false
   }
@@ -89,7 +93,7 @@ func writePathData (filepath string, pathData reporegistry.PathData) bool {
   // Log if an error occurs
   if err != nil {
 
-    fmt.Println("Error occured while writing to a file.")
+    fmt.Println("Error occured while writing to path file.")
     fmt.Println(err)
     return false
   }

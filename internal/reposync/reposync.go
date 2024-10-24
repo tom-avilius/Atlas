@@ -15,13 +15,14 @@ func WritePathData() bool {
     return false
   }
 
+  fmt.Println("\nReading Path file..")
   config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath);
-
   if !success {
 
-    fmt.Println("Error while reading config file.")
+    fmt.Println("Error while reading path file.")
     return false
   }
+  fmt.Println("Done")
 
   for _, data := range config.Repositories {    
 
@@ -35,11 +36,14 @@ func WritePathData() bool {
     var dirDataFormat reporegistry.PathData
     dirDataFormat.Paths = dirData
 
+    fmt.Println("\nWriting to path file..")
     if !writePathData(reporegistry.PathFilePath, dirDataFormat) {
 
       return false
     }
+    fmt.Println("Done")
   }
 
+  fmt.Println("\nSyncing Completed.")
   return true
 }
