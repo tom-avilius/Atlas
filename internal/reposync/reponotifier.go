@@ -79,8 +79,27 @@ func dirList (path string) ([]string, bool) {
 }
 
 
-// functoin to create a path file which stores the various paths that must be added to fsnotify
-func createPathFile() {
+// function to create a path file which stores the various paths that must be added to fsnotify
+func createPathFile() bool {
 
-  
+  // if the path file does not exist, create it
+  if !reporegistry.CheckFileExist(reporegistry.PathFilePath) {
+    
+    // if atlas config directory could not be created
+    if success := reporegistry.CreateDir(reporegistry.ConfigDir); !success {
+
+      fmt.Println("Could not create atlas config directory.")
+      return false
+    }
+    
+    // if path file could not be created
+    if success := reporegistry.CreateFile(reporegistry.PathFilePath); !success {
+
+      fmt.Println("Could not create path file for atlas.")
+      return false
+    }
+  }
+
+  // successful
+  return true
 } 
