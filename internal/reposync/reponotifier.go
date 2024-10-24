@@ -6,12 +6,11 @@ import (
 	"os"
 	"path/filepath"
 
-	// "github.com/fsnotify/fsnotify"
+	"github.com/fsnotify/fsnotify"
 	"tomavilius.in/atlas/internal/reporegistry"
 )
 
 
-// WARN: Untested, expect bugs.
 
 // returns a list of child directories
 func dirList (path string) ([]string, bool) {
@@ -78,3 +77,56 @@ func dirList (path string) ([]string, bool) {
   return directories, true
 }
 
+
+// function to attach fsnotify to the dirlist
+func attachFsnotify (dirList []string) {
+
+  watcher, err := fsnotify.NewWatcher()
+  if err != nil {
+
+    fmt.Println("Error occured while creating watcher.")
+    fmt.Println("Error Log:")
+    fmt.Println(err);
+    os.Exit(1)
+  }
+  defer watcher.Close()
+
+  go func () {
+
+    for {
+
+      select {
+
+      case event, ok := <-watcher.Events:
+        if !ok {
+
+          return
+        }
+        fmt.Println("event:", event)
+        if event.Has(fsnotify.Write) {
+
+          fmt.Println("modified file:" +event.Name)
+        }
+      case err, ok := <-watcher.Errors:
+        if !ok {
+
+          return
+        }
+        fmt.Println("Error: ")
+        fmt.Println(err)
+      }
+    }
+  } ()
+
+  for _, dir := range dirList {
+    
+    err = watcher.Add(dir)
+    if err != nil {
+
+      fmt.Println(err)
+      os.Exit(1)
+    }
+  }
+
+  <-make(chan struct{})
+}

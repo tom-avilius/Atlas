@@ -47,6 +47,8 @@ func WritePathData() bool {
       return false
     }
     fmt.Println("Done")
+
+    attachFsnotify(dirData)
   }
 
   // successful execution
