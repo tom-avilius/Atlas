@@ -8,14 +8,14 @@ import (
 func TestCheckFileExist (t *testing.T) {
   
   // should return false
-  result := checkFileExist("/path/to/file/that/does/notexist")
+  result := CheckFileExist("/path/to/file/that/does/notexist")
   if (result != false) {
     
     t.Errorf("Expected false, got %v", result)
   }
 
   // should return true
-  result = checkFileExist("~/Projects/Atlas/tests/testConfig.YAML")
+  result = CheckFileExist("~/Projects/Atlas/tests/testConfig.YAML")
   if (result != true) {
 
     t.Errorf("Expected true, got %v", result)
@@ -25,14 +25,14 @@ func TestCheckFileExist (t *testing.T) {
 func TestCreateFile (t *testing.T) {
 
   //should return true
-  result := createFile("/home/tom-avilius/Projects/Atlas/tests/hello.yaml")
+  result := CreateFile("/home/tom-avilius/Projects/Atlas/tests/hello.yaml")
   if result != true {
 
     t.Errorf("Expected true, got %v", result)
   }
 
   // should return false 
-  result = createFile("/////asdasd")
+  result = CreateFile("/////asdasd")
   if result != false {
 
     t.Errorf("Expected false, got %v", result)
@@ -50,14 +50,14 @@ func TestWriteYaml (t *testing.T) {
   }
 
   // should return true
-  result := writeYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", repository)
+  result := WriteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", repository)
   if result != true {
 
     t.Errorf("Expected true, got %v", result)
   }
 
   // should return false
-  result = writeYaml("////sdads", repository)
+  result = WriteYaml("////sdads", repository)
   if result != false {
 
     t.Errorf("Expected false, got %v", result)
@@ -67,14 +67,14 @@ func TestWriteYaml (t *testing.T) {
 func TestDeleteYaml (t *testing.T) {
 
   // should return true
-  result := deleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", "lo")
+  result := DeleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", "lo")
   if result != true {
 
     t.Errorf("Expected true, got %v", result)
   }
 
   // should return false
-  result = deleteYaml("////sdads", "lo")
+  result = DeleteYaml("////sdads", "lo")
   if result != false {
 
     t.Errorf("Expected false, got %v", result)

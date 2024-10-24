@@ -37,13 +37,13 @@ func HandleHomeDirectory (filePath string) (string, bool) {
 func AddRepository (repo Repository, clonePath string) bool {
 
   // checking if the config file exists
-  if !checkFileExist(ConfigFilePath) {
+  if !CheckFileExist(ConfigFilePath) {
 
     // creating the file when it does not exist
     fmt.Println("\nConfig file does not exist.")
-    createDir(ConfigDir)
+    CreateDir(ConfigDir)
     fmt.Print("Creating config file.. ")
-    createFile(ConfigFilePath)
+    CreateFile(ConfigFilePath)
     fmt.Print("Done.")
   }
 
@@ -52,12 +52,12 @@ func AddRepository (repo Repository, clonePath string) bool {
   isValidUrl := validateUrl(repo.Url);
 
   // checking if clone path exists
-  if !checkFileExist(clonePath) {
+  if !CheckFileExist(clonePath) {
 
     // creating clone path if it does not exist
     fmt.Println("\nClone Path does not exist.")
     fmt.Println("Creating clone path..")
-    createDir(clonePath)
+    CreateDir(clonePath)
   }
 
   // cloning the repository
@@ -69,7 +69,7 @@ func AddRepository (repo Repository, clonePath string) bool {
     if cloneRepo(repo.Url, path.Join(clonePath, repo.Name)) {
 
       fmt.Print("\nUpdating the config.. ")
-      if writeYaml(ConfigFilePath, repo) {
+      if WriteYaml(ConfigFilePath, repo) {
 
         fmt.Print("Done.")
         return true
@@ -90,7 +90,7 @@ func DeleteRepository (onlyDeleteReference bool, repoName string) bool {
   // only delete the reference not the actual local folder.
   if onlyDeleteReference {
 
-    return deleteYaml(ConfigFilePath, repoName);
+    return DeleteYaml(ConfigFilePath, repoName);
   }
 
   return false
@@ -100,7 +100,7 @@ func DeleteRepository (onlyDeleteReference bool, repoName string) bool {
 // Replaced the entire config with a new empty one.
 func ClearConfig () bool {
 
-  if createFile(ConfigFilePath) {
+  if CreateFile(ConfigFilePath) {
 
     fmt.Println("\nCleared the config file.")
     return true

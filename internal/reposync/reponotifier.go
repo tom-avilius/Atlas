@@ -11,6 +11,7 @@ import (
 )
 
 
+// WARN: Untested, expect bugs.
 
 // returns a list of child directories
 func dirList (path string) ([]string, bool) {

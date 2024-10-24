@@ -13,7 +13,7 @@ import (
 
 // checkFileExist checks whether a file exists or not.
 // returns false when it can not find the file or any error occurs.
-func checkFileExist (filePath string) bool {
+func CheckFileExist (filePath string) bool {
 
   // resolving for home dir
   if path, success := HandleHomeDirectory(filePath); success {
@@ -46,7 +46,7 @@ func checkFileExist (filePath string) bool {
 
 // function to create a directory at the specified path.
 // returns false if an error occurs
-func createDir (dir string) bool {
+func CreateDir (dir string) bool {
 
   // resolving ~ directory
   if path, success := HandleHomeDirectory(dir); success {
@@ -73,7 +73,7 @@ func createDir (dir string) bool {
 // createFile creates a new file at the specified location
 // returns false if an error occurs.
 // WARNING: If the file already exists then it will be formatted ( contents cleared ).
-func createFile (filepath string) bool {
+func CreateFile (filepath string) bool {
 
   // handling ~ paths
   if path, success := HandleHomeDirectory(filepath); success {
@@ -104,7 +104,7 @@ func createFile (filepath string) bool {
 
 // writeYaml appends to a yaml file with repo information
 // returns false if an error occurs.
-func writeYaml (filepath string, repo Repository) bool {
+func WriteYaml (filepath string, repo Repository) bool {
 
   // handling ~ paths
   if path, success := HandleHomeDirectory(filepath); success {
@@ -169,7 +169,7 @@ func writeYaml (filepath string, repo Repository) bool {
 
 // deleteYaml deletes the specified yaml data from a yaml file.
 // returns false if an error occurs.
-func deleteYaml (filePath string, repoName string) bool {
+func DeleteYaml (filePath string, repoName string) bool {
 
     // handling ~ paths
   if path, success := HandleHomeDirectory(filePath); success {

@@ -9,7 +9,7 @@ func removeRepository (repoName string,  onlyRemoveReference bool) bool {
 
   if (onlyRemoveReference) {
 
-    return deleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", repoName)
+    return DeleteYaml("/home/tom-avilius/Projects/Atlas/tests/testConfig.yaml", repoName)
   }
 
   // INFO: It would be wise to not do what I suggest below.
