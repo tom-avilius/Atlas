@@ -105,7 +105,18 @@ func attachFsnotify (dirList []string) {
         fmt.Println("event:", event)
         if event.Has(fsnotify.Write) {
 
-          fmt.Println("modified file:" +event.Name)
+          fmt.Println("Modified File");
+          fmt.Println("File Path: " +event.Name);
+        }
+        if event.Has(fsnotify.Remove) {
+
+          fmt.Println("File Removed");
+          fmt.Println("File Path: " +event.Name)
+        }
+        if event.Has(fsnotify.Create) {
+
+          fmt.Println("New Path Created")
+          fmt.Println("File Path: " +event.Name)
         }
       case err, ok := <-watcher.Errors:
         if !ok {
