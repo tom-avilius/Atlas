@@ -1,4 +1,3 @@
-
 package reposync
 
 import (
@@ -9,8 +8,6 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"tomavilius.in/atlas/internal/reporegistry"
 )
-
-
 
 // returns a list of child directories
 func dirList (path string) ([]string, bool) {
@@ -107,16 +104,20 @@ func attachFsnotify (dirList []string) {
 
           fmt.Println("Modified File");
           fmt.Println("File Path: " +event.Name);
+          repoAdd(event.Name)
         }
         if event.Has(fsnotify.Remove) {
 
           fmt.Println("File Removed");
           fmt.Println("File Path: " +event.Name)
+          repoAdd(event.Name)
         }
         if event.Has(fsnotify.Create) {
 
+          // TODO: If the new path is a directory then add it to watch list too.
           fmt.Println("New Path Created")
           fmt.Println("File Path: " +event.Name)
+          repoAdd(event.Name)
         }
       case err, ok := <-watcher.Errors:
         if !ok {
