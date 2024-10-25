@@ -26,3 +26,4 @@ var syncCommand = &cobra.Command {
     reposync.WritePathData()
   },
 }
+
