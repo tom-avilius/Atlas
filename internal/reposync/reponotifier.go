@@ -112,6 +112,7 @@ func attachFsnotify (dirList []string) {
           fmt.Println("File Removed");
           fmt.Println("File Path: " +event.Name)
           repoAdd(event.Name)
+          WritePathData()
         }
         if event.Has(fsnotify.Create) {
 
@@ -121,6 +122,7 @@ func attachFsnotify (dirList []string) {
           fmt.Println("File Path: " +event.Name)
           repoAdd(event.Name)
           ifDirAttach(event.Name, watcher)
+          WritePathData()
         }
       case err, ok := <-watcher.Errors:
         if !ok {
