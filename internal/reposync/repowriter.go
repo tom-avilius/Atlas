@@ -43,6 +43,13 @@ func createPathFile() bool {
 // returns false if an error occurs.
 func writePathData (filepath string, pathData reporegistry.PathData) bool {
 
+  // if path file could not be created
+    if success := reporegistry.CreateFile(reporegistry.PathFilePath); !success {
+
+      fmt.Println("Could not clear the path file for atlas.")
+      return false
+    }
+
   // handling ~ paths
   if path, success := reporegistry.HandleHomeDirectory(filepath); success {
 

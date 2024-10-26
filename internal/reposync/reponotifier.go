@@ -42,6 +42,8 @@ func dirList (path string) ([]string, bool) {
   // to store the list of directories
   var directories []string
 
+  directories = append(directories, path)
+
   // traversing through the entire directory tree
   error := filepath.Walk(path, func(dir string, info os.FileInfo, err error) error {
 
