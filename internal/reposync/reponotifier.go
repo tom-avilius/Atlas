@@ -108,6 +108,7 @@ func attachFsnotify (dirList []string) {
         }
         if event.Has(fsnotify.Remove) {
 
+          // TODO: Remove from path file
           fmt.Println("File Removed");
           fmt.Println("File Path: " +event.Name)
           repoAdd(event.Name)
@@ -115,6 +116,7 @@ func attachFsnotify (dirList []string) {
         if event.Has(fsnotify.Create) {
 
           // TODO: If the new path is a directory then add it to watch list too.
+          // TODO: Then update the path file.
           fmt.Println("New Path Created")
           fmt.Println("File Path: " +event.Name)
           repoAdd(event.Name)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/fsnotify/fsnotify"
 	"gopkg.in/yaml.v3"
 	"tomavilius.in/atlas/internal/reporegistry"
 )
@@ -102,3 +103,27 @@ func writePathData (filepath string, pathData reporegistry.PathData) bool {
   return true
 }
 
+
+// function to check whether a path is a directory and attach it to fsnotify
+// WARN: Use only absolute paths. Would fail terribly otherwise.
+func ifDirAttach (path string, watcher *fsnotify.Watcher) bool {
+
+  info, error := os.Stat(path)
+  if error != nil {
+
+    fmt.Println("Error while pinging path to check for directory.")
+    fmt.Println("Error Log:")
+    fmt.Println(error)
+    // BUG: Need to something more. Can't just return.
+    // Send a notification and possible just revoke the application.
+    return false
+  }
+
+  if !info.IsDir() {
+
+    return false
+  }
+
+  watcher.Add(path)
+  return true
+}
