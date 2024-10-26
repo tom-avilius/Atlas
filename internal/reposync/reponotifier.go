@@ -120,6 +120,7 @@ func attachFsnotify (dirList []string) {
           fmt.Println("New Path Created")
           fmt.Println("File Path: " +event.Name)
           repoAdd(event.Name)
+          ifDirAttach(event.Name, watcher)
         }
       case err, ok := <-watcher.Errors:
         if !ok {

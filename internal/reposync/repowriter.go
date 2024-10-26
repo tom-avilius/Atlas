@@ -124,6 +124,12 @@ func ifDirAttach (path string, watcher *fsnotify.Watcher) bool {
     return false
   }
 
-  watcher.Add(path)
+  error = watcher.Add(path)
+  if error != nil {
+
+    fmt.Println(error)
+    os.Exit(1)
+  }
   return true
 }
+
