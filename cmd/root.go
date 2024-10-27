@@ -23,6 +23,7 @@ You must first create a git repository and provide the url for atlas to do its t
     fmt.Println("add \t Add a git repository for atlas to make backups to.")
     fmt.Println("remove \t Remove a git repository for atlas to stop making backups to.")
     fmt.Println("sync \t Explicitly sync all the repositories managed by atlas.")
+    fmt.Println("watch \t Re-evaluate path file and attach fsnotify to them.")
     fmt.Println("list \t Lists all the repositories managed by atlas.")
     fmt.Println("info \t Detailed list view of atlas config.")
   },
