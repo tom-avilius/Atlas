@@ -19,6 +19,7 @@ You must first create a git repository and provide the url for atlas to do its t
     fmt.Println("Usage atlas [command]")
 
     fmt.Println("\nAvailable Commands:")
+    fmt.Println("version \t Display the atlas project version.")
     fmt.Println("add \t Add a git repository for atlas to make backups to.")
     fmt.Println("remove \t Remove a git repository for atlas to stop making backups to.")
     fmt.Println("list \t Lists all the repositories managed by atlas.")

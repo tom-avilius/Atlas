@@ -44,6 +44,7 @@ func createPathFile() bool {
 func writePathData (filepath string, pathData reporegistry.PathData) bool {
 
   // if path file could not be created
+  // NOTE: Doing this to clear the path file, expect a better way but.. well.. 
     if success := reporegistry.CreateFile(reporegistry.PathFilePath); !success {
 
       fmt.Println("Could not clear the path file for atlas.")
