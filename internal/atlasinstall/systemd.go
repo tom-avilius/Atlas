@@ -23,7 +23,7 @@ func generateServiceFile () bool {
 
   [Service]
   Type=simple
-  ExecStart=%s
+  ExecStart=%s start
 
   [Install]
   WantedBy=multi-user.target
