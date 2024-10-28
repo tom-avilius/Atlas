@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"tomavilius.in/atlas/internal/atlasinstall"
 )
 
 
@@ -20,6 +19,6 @@ var installCommand = &cobra.Command {
   Long: "Run the necessary install scripts. Don't run again and again.",
   Run: func(cmd *cobra.Command, args []string) {
 
-    
+    atlasinstall.InstallAtlas();
   },
 }
