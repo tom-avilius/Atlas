@@ -26,6 +26,7 @@ You must first create a git repository and provide the url for atlas to do its t
 		fmt.Println("list \t Lists all the repositories managed by atlas.")
 		fmt.Println("info \t Detailed list view of atlas config.")
 		fmt.Println("install \t Run the necessary install scripts.")
+		fmt.Println("start \t Start atlas service along with necessary components.")
 	},
 }
 
