@@ -10,6 +10,7 @@
 *
 **/
 
+// the cmd package that contains all the commands available.
 package cmd
 
 import (
@@ -19,6 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// creating the root command to print all the available commands.
 var rootCommand = &cobra.Command{
 
 	Use:   "atlas",
@@ -42,6 +44,7 @@ You must first create a git repository and provide the url for atlas to do its t
 	},
 }
 
+// entry point.
 func Execute() {
 
 	err := rootCommand.Execute()
