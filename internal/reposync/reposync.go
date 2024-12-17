@@ -10,83 +10,88 @@ import (
 // function to write path data to path file
 func WritePathData() bool {
 
-  // creating path file if it does not exist
-  if success := createPathFile(); !success {
+	// creating path file if it does not exist
+	if success := createPathFile(); !success {
 
-    return false
-  }
+		return false
+	}
 
-  // reading the config file
-  fmt.Println("\nReading Path file..")
-  config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath);
-  if !success {
+	// reading the config file
+	fmt.Println("\nReading Path file..")
+	config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath)
+	if !success {
 
-    fmt.Println("Error while reading path file.")
-    return false
-  }
-  fmt.Println("Done")
+		fmt.Println("Error while reading path file.")
+		return false
+	}
+	fmt.Println("Done")
 
-  // to store path data
-  var dirDataFormat reporegistry.PathData
+	// to store path data
+	var dirDataFormat reporegistry.PathData
 
-  // looping through the config data to extract path info 
-  for _, data := range config.Repositories {    
+	// looping through the config data to extract path info
+	for _, data := range config.Repositories {
 
-    dirData, success := dirList(data.Path)
-    if !success {
+		dirData, success := dirList(data.Path)
+		if !success {
 
-      return false
-    }
+			return false
+		}
 
-    dirDataFormat.Paths = append(dirDataFormat.Paths, dirData...)
-    
-    // writing path data to the path file
-    fmt.Println("\nWriting to path file..")
-    if !writePathData(reporegistry.PathFilePath, dirDataFormat) {
+		dirDataFormat.Paths = append(dirDataFormat.Paths, dirData...)
 
-      return false
-    }
-    fmt.Println("Done")
-  }
+		// writing path data to the path file
+		fmt.Println("\nWriting to path file..")
+		if !writePathData(reporegistry.PathFilePath, dirDataFormat) {
 
-  // successful execution
-  return true
+			return false
+		}
+		fmt.Println("Done")
+	}
+
+	// successful execution
+	return true
 }
 
+// TODO: Create a function to take in official paths without the child paths
+// and use it to map a child path back to its father...
+
+// function to map a child path back to its parent path
+func mapBackChildPath(path string) string { return path }
 
 // to add all dirpaths to fsnotify
-func AttachFsNotify () bool {
+func AttachFsNotify() bool {
 
-  fmt.Println("\nAttaching fsnotify..")
+	fmt.Println("\nAttaching fsnotify..")
 
-  // reading the config file
-  fmt.Println("Reading Path file..")
-  config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath);
-  if !success {
+	// reading the config file
+	fmt.Println("Reading Path file..")
+	config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath)
+	if !success {
 
-    fmt.Println("Error while reading path file.")
-    return false
-  }
-  fmt.Println("Done")
+		fmt.Println("Error while reading path file.")
+		return false
+	}
+	fmt.Println("Done")
 
-  // to store path data
-  var dirDataFormat reporegistry.PathData
+	// to store path data
+	var dirDataFormat reporegistry.PathData
 
-  // looping through the config data to extract path info 
-  for _, data := range config.Repositories {    
+	// looping through the config data to extract path info
+	for _, data := range config.Repositories {
 
-    dirData, success := dirList(data.Path)
-    if !success {
+		dirData, success := dirList(data.Path)
+		if !success {
 
-      return false
-    }
+			return false
+		}
 
-    dirDataFormat.Paths = append(dirDataFormat.Paths, dirData...)
-  }
+		dirDataFormat.Paths = append(dirDataFormat.Paths, dirData...)
+	}
 
-  // attaching fsnotify
-  attachFsnotify(dirDataFormat.Paths)
+	// attaching fsnotify
+	attachFsnotify(dirDataFormat.Paths)
 
-  // successful
-  return true
+	// successful
+	return true
 }

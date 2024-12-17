@@ -1,3 +1,15 @@
+/**
+*
+* @file: root.go
+* @description: The entry point for cobra cmd, the root command -> atlas.
+* 							prints out all the commands and their short description.
+*
+* @author: tom avilius <tomavilius@tomavilius.in>
+* @license: MIT license
+* @package: Atlas v0.0.1 development
+*
+**/
+
 package cmd
 
 import (

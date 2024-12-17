@@ -1,5 +1,6 @@
 package reposync
 
+// WARN: Test beviour of commit and push.
 // TODO: Somewhere store a personal access token and username and email for commiting and pushing to work.
 
 import (
