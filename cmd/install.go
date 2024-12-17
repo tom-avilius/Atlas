@@ -9,6 +9,8 @@
 *
 **/
 
+// TEST: Does the install command really work? I mean I don't think it does.
+
 package cmd
 
 import (
