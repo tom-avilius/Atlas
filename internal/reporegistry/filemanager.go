@@ -56,8 +56,13 @@ func CheckFileExist(filePath string) bool {
 	return true
 }
 
-// function to create a directory at the specified path.
-// returns false if an error occurs
+/**
+*
+* @function CreateDir()
+* @description: function to create a directory at the specified path.
+* returns false if an error occurs
+*
+**/
 func CreateDir(dir string) bool {
 
 	// resolving ~ directory
@@ -82,8 +87,13 @@ func CreateDir(dir string) bool {
 	return true
 }
 
-// createFile creates a new file at the specified location
-// returns false if an error occurs.
+/**
+*
+* @function CreateFile()
+* @description: createFile creates a new file at the specified location
+* returns false if an error occurs.
+*
+**/
 // WARNING: If the file already exists then it will be formatted ( contents cleared ).
 func CreateFile(filepath string) bool {
 
@@ -100,8 +110,7 @@ func CreateFile(filepath string) bool {
 	// creating the file at the specified location
 	file, err := os.Create(filepath)
 	defer file.Close()
-
-	// Log if an error occurs.
+	// PERF: Use go's way of writing if statements.
 	if err != nil {
 
 		fmt.Println("Error occured while creating file.")
@@ -113,8 +122,13 @@ func CreateFile(filepath string) bool {
 	return true
 }
 
-// writeYaml appends to a yaml file with repo information
-// returns false if an error occurs.
+/**
+*
+* @function WriteYaml()
+* @description: writeYaml appends to a yaml file with repo information
+* returns false if an error occurs.
+*
+**/
 func WriteYaml(filepath string, repo Repository) bool {
 
 	// handling ~ paths
@@ -131,8 +145,8 @@ func WriteYaml(filepath string, repo Repository) bool {
 	var data YamlData
 
 	// read the yaml file
+	// PERF: Use go's way of writing if statements.
 	content, err := os.ReadFile(filepath)
-	// Log if an error occurs
 	if err != nil {
 
 		fmt.Println("Error occured while reading a file.")
@@ -141,8 +155,8 @@ func WriteYaml(filepath string, repo Repository) bool {
 	}
 
 	// Unmarshal the yaml data
+	// PERF: Use go's way of writing if statements.
 	err = yaml.Unmarshal(content, &data)
-	// Log if an error occurs
 	if err != nil {
 
 		fmt.Println("Error occured while Unmarshalling a file.")
@@ -154,8 +168,8 @@ func WriteYaml(filepath string, repo Repository) bool {
 	data.Repositories = append(data.Repositories, repo)
 
 	// Marshal the updated yaml data
+	// PERF: Use go's way of writing if statements.
 	updatedYaml, err := yaml.Marshal(&data)
-	// Log if an error occurs.
 	if err != nil {
 
 		fmt.Println("Error occured while marhsalling a file.")
@@ -164,8 +178,8 @@ func WriteYaml(filepath string, repo Repository) bool {
 	}
 
 	// Writing the updated yaml data to the yaml file.
+	// PERF: Use go's way of writing if statements.
 	err = os.WriteFile(filepath, updatedYaml, 0644)
-	// Log if an error occurs
 	if err != nil {
 
 		fmt.Println("Error occured while writing to a file.")
@@ -177,8 +191,13 @@ func WriteYaml(filepath string, repo Repository) bool {
 	return true
 }
 
-// deleteYaml deletes the specified yaml data from a yaml file.
-// returns false if an error occurs.
+/**
+*
+* @function DeleteYaml()
+* @description: deleteYaml deletes the specified yaml data from a yaml file.
+*	returns false if an error occurs.
+*
+**/
 func DeleteYaml(filePath string, repoName string) bool {
 
 	// handling ~ paths
@@ -195,8 +214,8 @@ func DeleteYaml(filePath string, repoName string) bool {
 	var data YamlData
 
 	// reading the file
+	// PERF: Use go's way of writing if statements.
 	content, err := os.ReadFile(filePath)
-	// Log if an error occurs.
 	if err != nil {
 
 		fmt.Println("Error occured while reading a file.")
@@ -205,8 +224,8 @@ func DeleteYaml(filePath string, repoName string) bool {
 	}
 
 	// Unmarshal the read data.
+	// PERF: Use go's way of writing if statements.
 	err = yaml.Unmarshal(content, &data)
-	// Log if an error occurs
 	if err != nil {
 
 		fmt.Println("Error occured while Unmarshalling a file.")
@@ -239,8 +258,8 @@ func DeleteYaml(filePath string, repoName string) bool {
 	}
 
 	// Marshal the updated data
+	// PERF: Use go's way of writing if statements.
 	updatedYaml, err := yaml.Marshal(data)
-	// Log if an error occurs.
 	if err != nil {
 
 		fmt.Println("Error occured while marshalling a file.")
@@ -249,8 +268,8 @@ func DeleteYaml(filePath string, repoName string) bool {
 	}
 
 	// Write the updated data to the yaml file.
+	// PERF: Use go's way of writing if statements.
 	err = os.WriteFile(filePath, updatedYaml, 0644)
-	// Log if an error occurs
 	if err != nil {
 
 		fmt.Println("Error occured while writing to a file.")
