@@ -1,6 +1,15 @@
+/**
+*
+* @file: filemanager.go
+* @description: This file defines functions to manipulate YAML files.
+*
+* @author: tom avilius <tomavilius@tomavilius.in>
+* @license: MIT license
+* @package: Atlas v0.0.1 development
+*
+**/
 
 package reporegistry
-
 
 import (
 	"fmt"
@@ -9,247 +18,247 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// TODO: Port the ReadYaml function I found elsewhere to this file.
 
+/**
+*
+* @function CheckFileExist()
+* @description: checkFileExist checks whether a file exists or not.
+* returns false when it can not find the file or any error occurs.
+*
+**/
+func CheckFileExist(filePath string) bool {
 
-// checkFileExist checks whether a file exists or not.
-// returns false when it can not find the file or any error occurs.
-func CheckFileExist (filePath string) bool {
+	// resolving for home dir
+	if path, success := HandleHomeDirectory(filePath); success {
 
-  // resolving for home dir
-  if path, success := HandleHomeDirectory(filePath); success {
+		filePath = path
+	} else {
 
-    filePath = path
-  } else {
+		// unsuccessful
+		return false
+	}
 
-    // unsuccessful 
-    return false
-  }
+	// to check whether the file exists or not
+	// PERF: Use go's way of writing if statements.
+	_, err := os.Stat(filePath)
+	if os.IsNotExist(err) {
 
-  // to check whether the file exists or not
-  _, err := os.Stat(filePath)
+		return false
+	} else if err != nil { // Log if an error occured when checking for file existence
 
-  // return false when the file does not exist.
-  if os.IsNotExist(err) {
+		fmt.Println("Error occured while pinging a file.")
+		fmt.Println(err)
+		return false
+	}
 
-    return false
-  } else if err != nil { // Log if an error occured when checking for file existence
-
-    fmt.Println("Error occured while pinging a file.")
-    fmt.Println(err)
-    return false
-  }
-
-  // safely exit function when no error occurs.
-  return true;
+	// safely exit function when no error occurs.
+	return true
 }
-
 
 // function to create a directory at the specified path.
 // returns false if an error occurs
-func CreateDir (dir string) bool {
+func CreateDir(dir string) bool {
 
-  // resolving ~ directory
-  if path, success := HandleHomeDirectory(dir); success {
+	// resolving ~ directory
+	if path, success := HandleHomeDirectory(dir); success {
 
-    dir = path
-  } else {
+		dir = path
+	} else {
 
-    return false
-  }
+		return false
+	}
 
-  // create directory
-  if direrr := os.MkdirAll(dir, os.ModePerm); direrr != nil {
+	// create directory
+	if direrr := os.MkdirAll(dir, os.ModePerm); direrr != nil {
 
-    fmt.Println("Error occured while creating directory.")
-    fmt.Println("Error Log:")
-    fmt.Println(direrr)
-    return false
-  }
+		fmt.Println("Error occured while creating directory.")
+		fmt.Println("Error Log:")
+		fmt.Println(direrr)
+		return false
+	}
 
-  // safely exit function
-  return true
+	// safely exit function
+	return true
 }
 
 // createFile creates a new file at the specified location
 // returns false if an error occurs.
 // WARNING: If the file already exists then it will be formatted ( contents cleared ).
-func CreateFile (filepath string) bool {
+func CreateFile(filepath string) bool {
 
-  // handling ~ paths
-  if path, success := HandleHomeDirectory(filepath); success {
+	// handling ~ paths
+	if path, success := HandleHomeDirectory(filepath); success {
 
-    filepath = path
-  } else {
-    
-    // unsuccessful 
-    return false
-  }
+		filepath = path
+	} else {
 
-  // creating the file at the specified location
-  file, err := os.Create(filepath)
-  defer file.Close() 
+		// unsuccessful
+		return false
+	}
 
-  // Log if an error occurs.
-  if err != nil {
+	// creating the file at the specified location
+	file, err := os.Create(filepath)
+	defer file.Close()
 
-    fmt.Println("Error occured while creating file.")
-    fmt.Println(err)
-    return false 
-  }
+	// Log if an error occurs.
+	if err != nil {
 
-  // safely exit function.
-  return true
+		fmt.Println("Error occured while creating file.")
+		fmt.Println(err)
+		return false
+	}
+
+	// safely exit function.
+	return true
 }
-
 
 // writeYaml appends to a yaml file with repo information
 // returns false if an error occurs.
-func WriteYaml (filepath string, repo Repository) bool {
+func WriteYaml(filepath string, repo Repository) bool {
 
-  // handling ~ paths
-  if path, success := HandleHomeDirectory(filepath); success {
+	// handling ~ paths
+	if path, success := HandleHomeDirectory(filepath); success {
 
-    filepath = path
-  } else {
-    
-    // unsuccessful 
-    return false
-  }
+		filepath = path
+	} else {
 
-  // to store yaml data.
-  var data YamlData
+		// unsuccessful
+		return false
+	}
 
-  // read the yaml file
-  content, err := os.ReadFile(filepath)
-  // Log if an error occurs
-  if err != nil {
+	// to store yaml data.
+	var data YamlData
 
-    fmt.Println("Error occured while reading a file.")
-    fmt.Println(err)
-    return false
-  }
+	// read the yaml file
+	content, err := os.ReadFile(filepath)
+	// Log if an error occurs
+	if err != nil {
 
-  // Unmarshal the yaml data
-  err = yaml.Unmarshal(content, &data)
-  // Log if an error occurs
-  if err != nil {
+		fmt.Println("Error occured while reading a file.")
+		fmt.Println(err)
+		return false
+	}
 
-    fmt.Println("Error occured while Unmarshalling a file.")
-    fmt.Println(err)
-    return false
-  }
+	// Unmarshal the yaml data
+	err = yaml.Unmarshal(content, &data)
+	// Log if an error occurs
+	if err != nil {
 
-  // append the new data
-  data.Repositories = append(data.Repositories, repo)
+		fmt.Println("Error occured while Unmarshalling a file.")
+		fmt.Println(err)
+		return false
+	}
 
-  // Marshal the updated yaml data
-  updatedYaml, err := yaml.Marshal(&data)
-  // Log if an error occurs.
-  if err != nil {
+	// append the new data
+	data.Repositories = append(data.Repositories, repo)
 
-    fmt.Println("Error occured while marhsalling a file.")
-    fmt.Println(err)
-    return false
-  }
+	// Marshal the updated yaml data
+	updatedYaml, err := yaml.Marshal(&data)
+	// Log if an error occurs.
+	if err != nil {
 
-  // Writing the updated yaml data to the yaml file.
-  err = os.WriteFile(filepath, updatedYaml, 0644)
-  // Log if an error occurs
-  if err != nil {
+		fmt.Println("Error occured while marhsalling a file.")
+		fmt.Println(err)
+		return false
+	}
 
-    fmt.Println("Error occured while writing to a file.")
-    fmt.Println(err)
-    return false
-  }
+	// Writing the updated yaml data to the yaml file.
+	err = os.WriteFile(filepath, updatedYaml, 0644)
+	// Log if an error occurs
+	if err != nil {
 
-  // safely exit the function.
-  return true
+		fmt.Println("Error occured while writing to a file.")
+		fmt.Println(err)
+		return false
+	}
+
+	// safely exit the function.
+	return true
 }
-
 
 // deleteYaml deletes the specified yaml data from a yaml file.
 // returns false if an error occurs.
-func DeleteYaml (filePath string, repoName string) bool {
+func DeleteYaml(filePath string, repoName string) bool {
 
-    // handling ~ paths
-  if path, success := HandleHomeDirectory(filePath); success {
+	// handling ~ paths
+	if path, success := HandleHomeDirectory(filePath); success {
 
-    filePath = path
-  } else {
-    
-    // unsuccessful 
-    return false
-  }
+		filePath = path
+	} else {
 
-  // to store the yaml data
-  var data YamlData
+		// unsuccessful
+		return false
+	}
 
-  // reading the file
-  content, err := os.ReadFile(filePath)
-  // Log if an error occurs.
-  if err != nil {
+	// to store the yaml data
+	var data YamlData
 
-    fmt.Println("Error occured while reading a file.")
-    fmt.Println(err)
-    return false
-  }
+	// reading the file
+	content, err := os.ReadFile(filePath)
+	// Log if an error occurs.
+	if err != nil {
 
-  // Unmarshal the read data.
-  err = yaml.Unmarshal(content, &data)
-  // Log if an error occurs
-  if err != nil {
+		fmt.Println("Error occured while reading a file.")
+		fmt.Println(err)
+		return false
+	}
 
-    fmt.Println("Error occured while Unmarshalling a file.")
-    fmt.Println(err)
-    return false
-  }
+	// Unmarshal the read data.
+	err = yaml.Unmarshal(content, &data)
+	// Log if an error occurs
+	if err != nil {
 
-  // amount of deleted data
-  var flag int = 0;
+		fmt.Println("Error occured while Unmarshalling a file.")
+		fmt.Println(err)
+		return false
+	}
 
-  // to check for matching data
-  for i := 0; i < len(data.Repositories); i++ {
+	// amount of deleted data
+	var flag int = 0
 
-    if data.Repositories[i].Name == repoName {
+	// to check for matching data
+	for i := 0; i < len(data.Repositories); i++ {
 
-      // Remove the element at index i
-      data.Repositories = append(data.Repositories[:i], data.Repositories[i+1:]...)
-      // Since the slice shrinks, you need to decrement i to stay on the same index
-      i--
-      // increment flag
-      flag++
-    } 
-  }
+		if data.Repositories[i].Name == repoName {
 
-  // checking if no data data was deleted
-  if flag == 0 {
+			// Remove the element at index i
+			data.Repositories = append(data.Repositories[:i], data.Repositories[i+1:]...)
+			// Since the slice shrinks, you need to decrement i to stay on the same index
+			i--
+			// increment flag
+			flag++
+		}
+	}
 
-    fmt.Println("Warning: No match found for " + repoName)
-    return false;
-  }
+	// checking if no data data was deleted
+	if flag == 0 {
 
-  // Marshal the updated data
-  updatedYaml, err := yaml.Marshal(data)
-  // Log if an error occurs.
-  if err != nil {
+		fmt.Println("Warning: No match found for " + repoName)
+		return false
+	}
 
-    fmt.Println("Error occured while marshalling a file.")
-    fmt.Println(err)
-    return false
-  }
+	// Marshal the updated data
+	updatedYaml, err := yaml.Marshal(data)
+	// Log if an error occurs.
+	if err != nil {
 
-  // Write the updated data to the yaml file.
-  err = os.WriteFile(filePath, updatedYaml, 0644)
-  // Log if an error occurs
-  if err != nil {
-    
-    fmt.Println("Error occured while writing to a file.")
-    fmt.Println(err)
-    return false
-  }
+		fmt.Println("Error occured while marshalling a file.")
+		fmt.Println(err)
+		return false
+	}
 
-  // safely exit the function.
-  fmt.Println("Success: Removed " +repoName +" from config.")
-  return true
+	// Write the updated data to the yaml file.
+	err = os.WriteFile(filePath, updatedYaml, 0644)
+	// Log if an error occurs
+	if err != nil {
+
+		fmt.Println("Error occured while writing to a file.")
+		fmt.Println(err)
+		return false
+	}
+
+	// safely exit the function.
+	fmt.Println("Success: Removed " + repoName + " from config.")
+	return true
 }
-
