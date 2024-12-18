@@ -1,3 +1,14 @@
+/**
+*
+* @file: register.go
+* @description: This file defines functions that read the config and print it.
+*
+* @author: tom avilius <tomavilius@tomavilius.in>
+* @license: MIT license
+* @package: Atlas v0.0.1 development
+*
+**/
+
 package repoinformer
 
 import (
@@ -7,13 +18,18 @@ import (
 	"tomavilius.in/atlas/internal/reporegistry"
 )
 
-// listRepositories lists the complete atlas config after formatting it.
+/**
+*
+* @func: listRepositories()
+* @description: listRepositories lists the complete atlas config after formatting it.
+*
+**/
 func listRepositories() bool {
 
 	// read the config file
 	data, success := ReadYaml(reporegistry.ConfigFilePath)
-
 	// if read yaml was unsuccessful then simply return false
+	// PERF: Use go's way of writing if statements.
 	if !success {
 
 		fmt.Println("Could not read atlas config file. Maybe you have not provided any repository for atlas to watch yet.")
@@ -34,13 +50,18 @@ func listRepositories() bool {
 	return success
 }
 
-// to only list Repositories from atlas config.
+/**
+*
+* @func: listOnlyRepositories()
+* @description: to only list Repositories from atlas config.
+*
+**/
 func listOnlyRepositories() bool {
 
 	// read the config file
 	data, success := ReadYaml(reporegistry.ConfigFilePath)
-
 	// if read yaml was unsuccessful then simply return false
+	// PERF: Use go's way of writing if statuements.
 	if !success {
 
 		fmt.Println("Could not read atlas config file. Maybe you have not added any repository yet for atlas to watch.")
@@ -48,9 +69,10 @@ func listOnlyRepositories() bool {
 	}
 
 	// display Repositories
-	fmt.Println()
+	fmt.Println() // empty line..
 	for i := 0; i < len(data.Repositories); i++ {
 
+		// print the repo name
 		fmt.Println(data.Repositories[i].Name)
 	}
 
