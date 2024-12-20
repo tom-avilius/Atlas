@@ -20,7 +20,8 @@ import (
 
 /**
 *
-* @func: function the fills in the home directory when ~ is provided at the start
+* @func: HandleHomeDirectory()
+* @description: function that fills in the home directory when ~ is provided at the start
 *
 **/
 func HandleHomeDirectory(filePath string) (string, bool) {
@@ -29,8 +30,7 @@ func HandleHomeDirectory(filePath string) (string, bool) {
 
 		// getting the home directory
 		homeDir, err := os.UserHomeDir()
-
-		// Log if an error occurs
+		// PERF: Use go's way of writing if statements.
 		if err != nil {
 
 			fmt.Println("Error while getting the home directory.")
@@ -46,8 +46,13 @@ func HandleHomeDirectory(filePath string) (string, bool) {
 	return filePath, true
 }
 
-// AddRepository adds a repository for atlas to manage.
-// returns false if an error occurs.
+/**
+*
+* @func: AddRepository()
+* @description: adds a repository for atlas to manage.
+* returns false if an error occurs.
+*
+**/
 func AddRepository(repo Repository, clonePath string) bool {
 
 	// checking if the config file exists
@@ -96,8 +101,13 @@ func AddRepository(repo Repository, clonePath string) bool {
 	return false
 }
 
-// DeleteRepository deletes the repository meaning atlas would no more manage it.
-// returns false if an error occurs.
+/**
+*
+* @func: DeleteRepository()
+* @description: deletes the repository meaning atlas would no more manage it.
+* returns false if an error occurs.
+*
+**/
 func DeleteRepository(onlyDeleteReference bool, repoName string) bool {
 
 	// only delete the reference not the actual local folder.
@@ -109,9 +119,15 @@ func DeleteRepository(onlyDeleteReference bool, repoName string) bool {
 	return false
 }
 
-// Replaced the entire config with a new empty one.
+/**
+*
+* @func: ClearConfig()
+* @description: Replace the entire config with a new empty one.
+*
+ */
 func ClearConfig() bool {
 
+	// creating a new config file .. empty one.
 	if CreateFile(ConfigFilePath) {
 
 		fmt.Println("\nCleared the config file.")
