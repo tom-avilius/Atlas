@@ -1,3 +1,14 @@
+/**
+*
+* @file: repomanager.go
+* @description: This file defines functions to manipulate YAML files.
+*
+* @author: tom avilius <tomavilius@tomavilius.in>
+* @license: MIT license
+* @package: Atlas v0.0.1 development
+*
+**/
+
 package reposync
 
 // WARN: Test beviour of commit and push.
