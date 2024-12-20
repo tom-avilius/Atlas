@@ -1,7 +1,7 @@
 /**
 *
 * @file: repomanager.go
-* @description: This file defines functions to manipulate YAML files.
+* @description: This file defines functions to manipulate repositories and perform operations such as add, push and commit.
 *
 * @author: tom avilius <tomavilius@tomavilius.in>
 * @license: MIT license
@@ -23,9 +23,16 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
+/**
+*
+* @func: repoAdd()
+* @description: function to add changes to the working tree.
+*
+**/
 func repoAdd(repoPath string) bool {
 
 	// TODO: Use go's way of writing if statements.
+	// openeing the repository
 	repo, err := git.PlainOpen(repoPath)
 	if err != nil {
 
@@ -35,6 +42,7 @@ func repoAdd(repoPath string) bool {
 		return false
 	}
 
+	// getting the current worktree
 	workTree, err := repo.Worktree()
 	if err != nil {
 
@@ -44,11 +52,13 @@ func repoAdd(repoPath string) bool {
 		return false
 	}
 
+	// adding the repository changes to the work tree.
 	addOpts := &git.AddOptions{
 
 		All: true,
 	}
 
+	// PERF: Use go's way of writing if statements.
 	err = workTree.AddWithOptions(addOpts)
 	if err != nil {
 
@@ -61,9 +71,15 @@ func repoAdd(repoPath string) bool {
 	return true
 }
 
-// Function to commit changes
+/**
+*
+* @func: repoCommit()
+* @description: function to commit changes in a repository after adding them to the worktree.
+**/
 func repoCommit(repoPath, commitMessage string) bool {
 
+	// PERF: Use go's way of writing if statements.
+	// opening the git repository
 	repo, err := git.PlainOpen(repoPath)
 	if err != nil {
 		fmt.Println("Error while opening repository.")
@@ -71,6 +87,8 @@ func repoCommit(repoPath, commitMessage string) bool {
 		return false
 	}
 
+	// PERF: Use go's way of writing if statements.
+	// getting the current worktree
 	workTree, err := repo.Worktree()
 	if err != nil {
 		fmt.Println("Error while getting the Worktree.")
@@ -78,6 +96,8 @@ func repoCommit(repoPath, commitMessage string) bool {
 		return false
 	}
 
+	// PERF: Use go's way of writing if statements.
+	// commiting the changes.
 	commit, err := workTree.Commit(commitMessage, &git.CommitOptions{
 		Author: &object.Signature{
 			//TODO: Add user name and email
@@ -92,12 +112,21 @@ func repoCommit(repoPath, commitMessage string) bool {
 		return false
 	}
 
+	// when the commit is successful, send out a success message.
 	fmt.Println("Committed changes with hash:", commit.String())
 	return true
 }
 
-// Function to push changes
+/**
+*
+* @func: repoPush()
+* @description: function to push changes to the remote repository.
+*
+**/
 func repoPush(repoPath, username, password string) bool {
+
+	// PERF: Use go's way of writing if statements.
+	// opening the git repository.
 	repo, err := git.PlainOpen(repoPath)
 	if err != nil {
 		fmt.Println("Error while opening repository.")
@@ -105,6 +134,8 @@ func repoPush(repoPath, username, password string) bool {
 		return false
 	}
 
+	// PERF: Use go's way of writing if statements.
+	// pushing the changes to the remote repository.
 	err = repo.Push(&git.PushOptions{
 		Auth: &http.BasicAuth{
 			Username: username, // Username for GitHub or other Git service
@@ -117,6 +148,7 @@ func repoPush(repoPath, username, password string) bool {
 		return false
 	}
 
+	// print success message when function successful.
 	fmt.Println("Pushed changes to remote repository.")
 	return true
 }
