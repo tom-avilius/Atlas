@@ -1,3 +1,14 @@
+/**
+*
+* @file: reponotifier.go
+* @description: This file defines functions to check for changes in files and perform sync operations.
+*
+* @author: tom avilius <tomavilius@tomavilius.in>
+* @license: MIT license
+* @package: Atlas v0.0.1 development
+*
+**/
+
 package reposync
 
 import (
@@ -9,7 +20,13 @@ import (
 	"tomavilius.in/atlas/internal/reporegistry"
 )
 
-// returns a list of child directories
+/**
+*
+* @func dirList()
+* @description: returns a list of child directories
+*
+**/
+
 func dirList(path string) ([]string, bool) {
 
 	// handling ~ paths
@@ -76,9 +93,17 @@ func dirList(path string) ([]string, bool) {
 	return directories, true
 }
 
-// function to attach fsnotify to the dirlist
+/**
+*
+* @func: attachFsnotify()
+* @description: function to attach fsnotify to the dirlist
+*
+**/
+
 func attachFsnotify(dirList []string) {
 
+	// creating a file system watcher
+	// PERF: Use go's way of writing if statements.
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 
@@ -89,6 +114,7 @@ func attachFsnotify(dirList []string) {
 	}
 	defer watcher.Close()
 
+	// go routineeeeeeees
 	go func() {
 
 		for {
@@ -139,6 +165,7 @@ func attachFsnotify(dirList []string) {
 		}
 	}()
 
+	// attach watcher to all directories and child directories.
 	for _, dir := range dirList {
 
 		err = watcher.Add(dir)
