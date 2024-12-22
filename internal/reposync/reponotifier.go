@@ -134,23 +134,21 @@ func attachFsnotify(dirList []string) {
 
 					fmt.Println("Modified File")
 					fmt.Println("File Path: " + event.Name)
-					// repoAdd(event.Name)
+					repoAdd(event.Name)
 					// repoCommit(event.Name, "Modify file: "+event.Name)
 				}
 				if event.Has(fsnotify.Remove) {
 
-					// TODO: Remove from path file
+					// WARN: Running WritePathData function should update the path file
+					// and ensure that it does not contain any invalid paths.
 					fmt.Println("File Removed")
 					fmt.Println("File Path: " + event.Name)
-					// repoAdd(event.Name)
+					repoAdd(event.Name)
 					// repoCommit(event.Name, "Removed file: "+event.Name)
-					// WritePathData()
+					WritePathData()
 				}
 				if event.Has(fsnotify.Create) {
 
-					// FIXME: Resolve the below todo as it has been taken care of.
-					// TODO: If the new path is a directory then add it to watch list too.
-					// TODO: Then update the path file.
 					fmt.Println("New Path Created")
 					fmt.Println("File Path: " + event.Name)
 					if path, success := mapBackChildPath(event.Name); success {
