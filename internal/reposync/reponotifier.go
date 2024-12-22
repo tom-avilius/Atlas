@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/fsnotify/fsnotify"
 	"tomavilius.in/atlas/internal/reporegistry"
@@ -70,7 +71,7 @@ func dirList(path string) ([]string, bool) {
 		}
 
 		// checking if the entity is a directory
-		if info.IsDir() && path != dir {
+		if info.IsDir() && path != dir && !strings.Contains(dir, ".git") {
 
 			// appending it to the list of directories
 			directories = append(directories, dir)
@@ -127,31 +128,37 @@ func attachFsnotify(dirList []string) {
 
 					return
 				}
+				// WARN: The log below is only for debugging and should be removed post development.
 				fmt.Println("event:", event)
 				if event.Has(fsnotify.Write) {
 
 					fmt.Println("Modified File")
 					fmt.Println("File Path: " + event.Name)
-					repoAdd(event.Name)
-					repoCommit(event.Name, "Modify file: "+event.Name)
+					// repoAdd(event.Name)
+					// repoCommit(event.Name, "Modify file: "+event.Name)
 				}
 				if event.Has(fsnotify.Remove) {
 
 					// TODO: Remove from path file
 					fmt.Println("File Removed")
 					fmt.Println("File Path: " + event.Name)
-					repoAdd(event.Name)
-					repoCommit(event.Name, "Removed file: "+event.Name)
-					WritePathData()
+					// repoAdd(event.Name)
+					// repoCommit(event.Name, "Removed file: "+event.Name)
+					// WritePathData()
 				}
 				if event.Has(fsnotify.Create) {
 
+					// FIXME: Resolve the below todo as it has been taken care of.
 					// TODO: If the new path is a directory then add it to watch list too.
 					// TODO: Then update the path file.
 					fmt.Println("New Path Created")
 					fmt.Println("File Path: " + event.Name)
-					repoAdd(event.Name)
-					repoCommit(event.Name, "Created file: "+event.Name)
+					if path, success := mapBackChildPath(event.Name); success {
+
+						fmt.Println("The path: " + path)
+						repoAdd(path)
+					}
+					// repoCommit(event.Name, "Created file: "+event.Name)
 					ifDirAttach(event.Name, watcher)
 					WritePathData()
 				}

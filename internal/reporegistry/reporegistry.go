@@ -108,6 +108,7 @@ func AddRepository(repo Repository, clonePath string) bool {
 * returns false if an error occurs.
 *
 **/
+// BUG: This function does not clear the path file.
 func DeleteRepository(onlyDeleteReference bool, repoName string) bool {
 
 	// only delete the reference not the actual local folder.
