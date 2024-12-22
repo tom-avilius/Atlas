@@ -81,6 +81,7 @@ func dirList(path string) ([]string, bool) {
 	})
 
 	// if an error occurs while traversing the directory tree
+	// PERF: Use go's way of writing if statements.
 	if error != nil {
 
 		fmt.Println("Error occured while getting children directories.")

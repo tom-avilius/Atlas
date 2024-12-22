@@ -1,3 +1,14 @@
+/**
+*
+* @file: reposync.go
+* @description: This file exposes functions to manage the syncing of local repositories.
+*
+* @author: tom avilius <tomavilius@tomavilius.in>
+* @license: MIT license
+* @package: Atlas v0.0.1 development
+*
+**/
+
 package reposync
 
 import (
@@ -7,7 +18,12 @@ import (
 	"tomavilius.in/atlas/internal/reporegistry"
 )
 
-// function to write path data to path file
+/**
+*
+* @func: WritePathData()
+* @description: function to write path data to path file
+*
+**/
 func WritePathData() bool {
 
 	// creating path file if it does not exist
@@ -18,6 +34,7 @@ func WritePathData() bool {
 
 	// reading the config file
 	fmt.Println("\nReading Path file..")
+	// PERF: Use go's way of writing if statement
 	config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath)
 	if !success {
 
@@ -32,6 +49,8 @@ func WritePathData() bool {
 	// looping through the config data to extract path info
 	for _, data := range config.Repositories {
 
+		// create list of child directories.
+		// PERF: Use go's way of writing if statements.
 		dirData, success := dirList(data.Path)
 		if !success {
 
@@ -56,16 +75,28 @@ func WritePathData() bool {
 // TODO: Create a function to take in official paths without the child paths
 // and use it to map a child path back to its father...
 
-// function to map a child path back to its parent path
+/**
+*
+* @func: mapBackChildPath()
+* @description: function to map a child path back to its parent path
+*
+**/
 func mapBackChildPath(path string) string { return path }
 
-// to add all dirpaths to fsnotify
+/**
+*
+* @func: AttachFsNotify()
+* @description: to add all dirpaths to fsnotify
+*
+**/
 func AttachFsNotify() bool {
 
+	// prompt action
 	fmt.Println("\nAttaching fsnotify..")
 
 	// reading the config file
 	fmt.Println("Reading Path file..")
+	// PERF: Use go's way of writing if statements.
 	config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath)
 	if !success {
 
@@ -80,12 +111,17 @@ func AttachFsNotify() bool {
 	// looping through the config data to extract path info
 	for _, data := range config.Repositories {
 
+		// finding child directories of each local repository
+		// then add them to the list of all child directories containing
+		// child directories of all local repositories.
+		// PERF: Use go's way of writing if statements.
 		dirData, success := dirList(data.Path)
 		if !success {
 
 			return false
 		}
 
+		// the actual appending.
 		dirDataFormat.Paths = append(dirDataFormat.Paths, dirData...)
 	}
 
