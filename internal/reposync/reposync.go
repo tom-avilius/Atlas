@@ -13,6 +13,7 @@ package reposync
 
 import (
 	"fmt"
+	"strings"
 
 	"tomavilius.in/atlas/internal/repoinformer"
 	"tomavilius.in/atlas/internal/reporegistry"
@@ -33,6 +34,7 @@ func WritePathData() bool {
 	}
 
 	// reading the config file
+	// FIXME: You are reading the config file here not the path file.
 	fmt.Println("\nReading Path file..")
 	// PERF: Use go's way of writing if statement
 	config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath)
@@ -81,7 +83,30 @@ func WritePathData() bool {
 * @description: function to map a child path back to its parent path
 *
 **/
-func mapBackChildPath(path string) string { return path }
+func mapBackChildPath(path string) (string, bool) {
+
+	// reading the config file.
+	// WARN: Ensure that the config file exists.
+	if configData, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath); success {
+
+		// looping over the config repository data to get repo paths.
+		for _, data := range configData.Repositories {
+
+			// checking if the repo path begins with the provided child path
+			if strings.Contains(path, data.Path) {
+
+				return data.Path, true
+			}
+		}
+	} else {
+
+		// could not access the config file.
+		fmt.Println("Could not read the atlas config file; was trying to map child paths back to their parents.")
+	}
+
+	// return in case of failure.
+	return "", false
+}
 
 /**
 *
