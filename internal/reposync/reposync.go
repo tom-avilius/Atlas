@@ -34,8 +34,7 @@ func WritePathData() bool {
 	}
 
 	// reading the config file
-	// FIXME: You are reading the config file here not the path file.
-	fmt.Println("\nReading Path file..")
+	fmt.Println("\nReading the config file..")
 	// PERF: Use go's way of writing if statement
 	config, success := repoinformer.ReadYaml(reporegistry.ConfigFilePath)
 	if !success {
@@ -73,9 +72,6 @@ func WritePathData() bool {
 	// successful execution
 	return true
 }
-
-// TODO: Create a function to take in official paths without the child paths
-// and use it to map a child path back to its father...
 
 /**
 *
